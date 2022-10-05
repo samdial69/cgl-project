@@ -1,0 +1,40 @@
+services:
+  cgl-database:
+    container_name: cgl-database
+    image: postgres
+    environment:
+      POSTGRES_USER: cgl
+      POSTGRES_PASSWORD: cglpass
+      PGDATA: /data/postgres
+    volumes:
+        - cgl-data:/data/postgres
+    ports:
+        - "5432:5432"
+    networks:
+        - cglnet
+    restart: unless-stopped
+
+  cgl-pgadmin:
+    container_name: cgl-pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+        - cgl-pgadmin:/var/lib/pgadmin
+    ports:
+        - "5050:80"
+    networks:
+        - cglnet
+    restart: unless-stopped
+
+
+networks:
+    cglnet:
+        driver: bridge
+
+volumes:
+    cgl-data:
+    cgl-pgadmin:
+
