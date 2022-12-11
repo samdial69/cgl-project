@@ -1,0 +1,39 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org" lang="FR">
+    <head>
+        <meta charset="UTF-8">
+        <title>Parameter</title>
+        <link th:rel="stylesheet" th:href="@{webjars/bootstrap/5.2.3/css/bootstrap.css}">
+    </head>
+    <body>
+        <h1 class="text-center bg-danger">Parameter</h1>
+        <button class="btn btn-primary" th:onclick="|location.href='@{/parameters/create}'|">Ajouter</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>Niveau</th>
+                    <th>Pourcentage</th>
+                    <th>Nombres d'affaires</th>
+                    <th>Nombre de mois</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td th:if="parameter == null">Test</td>
+                </tr>
+                <tr>
+                    <td th:utext="${parameter.levelOfSponsorship}"></td>
+                    <td th:utext="${parameter.percentageOfCommission}"></td>
+                    <td th:utext="${parameter.numberOfBusinessToBeAffiliated}"></td>
+                    <td th:utext="${parameter.numberOfMonthsAffiliation}"></td>
+                    <td>
+                        <a th:href="@{/parameters/edit/{id}(id=${parameter.id})}">Edit</a>
+                    </td>
+                    <td>
+                        <a th:href="@{/parameters/delete/{id}(id=${parameter.id})}">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>
