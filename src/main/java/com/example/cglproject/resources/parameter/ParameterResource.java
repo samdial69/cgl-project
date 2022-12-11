@@ -50,8 +50,9 @@ public class ParameterResource {
         Optional<Parameter> parameter = this.service.findById(id);
         if(parameter.isEmpty()) {
             model.addAttribute("parameter", null);
+        }else {
+            model.addAttribute("parameter", parameter.get());
         }
-        model.addAttribute("parameter",parameter.get());
         return "parameter/edit";
     }
 
