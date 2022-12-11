@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,6 +24,12 @@ public class ParameterServiceImpl implements IParameterService {
     public Optional<Parameter> findById(Long id) {
         log.info("Fetching an parameter by id :{}",id);
         return this.parameterRepository.findById(id);
+    }
+
+    @Override
+    public List<Parameter> findAll() {
+        log.info("Fetching all parameters");
+        return this.parameterRepository.findAll();
     }
 
     @Override

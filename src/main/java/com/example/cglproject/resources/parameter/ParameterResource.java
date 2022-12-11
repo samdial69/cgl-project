@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -22,11 +23,11 @@ public class ParameterResource {
 
     @GetMapping("/")
     public String getParameter(Model model){
-        Optional<Parameter> parameter = this.service.findById(6L);
-        if(parameter.isEmpty()) {
-            model.addAttribute("parameter", null);
+        List<Parameter> parameters = this.service.findAll();
+        if(parameters.isEmpty()) {
+            model.addAttribute("parameters", null);
         }
-        model.addAttribute("parameter",parameter.get());
+        model.addAttribute("parameters",parameters);
         log.info("model {}",model.getAttribute("parameter"));
         return "parameter/index";
     }

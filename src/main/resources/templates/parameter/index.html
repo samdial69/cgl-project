@@ -18,19 +18,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td th:if="parameter == null">Test</td>
-                </tr>
-                <tr>
-                    <td th:utext="${parameter.levelOfSponsorship}"></td>
-                    <td th:utext="${parameter.percentageOfCommission}"></td>
-                    <td th:utext="${parameter.numberOfBusinessToBeAffiliated}"></td>
-                    <td th:utext="${parameter.numberOfMonthsAffiliation}"></td>
+                <tr th:each="parameter : ${parameters}">
+                    <td th:text="${parameter.levelOfSponsorship}"></td>
+                    <td th:text="${parameter.percentageOfCommission}"></td>
+                    <td th:text="${parameter.numberOfBusinessToBeAffiliated}"></td>
+                    <td th:text="${parameter.numberOfMonthsAffiliation}"></td>
                     <td>
-                        <a th:href="@{/parameters/edit/{id}(id=${parameter.id})}">Edit</a>
-                    </td>
-                    <td>
-                        <a th:href="@{/parameters/delete/{id}(id=${parameter.id})}">Delete</a>
+                        <button class="btn btn-primary" th:onclick="|location.href='@{/parameters/edit/{id}(id=${parameter.id})}'|">Modifier</button>
+                        <button class="btn btn-danger" th:onclick="|location.href='@{/parameters/delete/{id}(id=${parameter.id})}'|">Supprimer</button>
                     </td>
                 </tr>
             </tbody>
