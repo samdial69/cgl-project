@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Parameter</title>
+</head>
+<body>
+    <h1>Parameter</h1>
+    <form action="#" th:action="@{/parameters/edit/{id}(id=${parameter.id})}" th:object="${parameter}" method="post">
+        <p>
+            <label for="name">Niveau:</label>
+            <input type="text" id="name" th:field="*{levelOfSponsorship}" />
+        </p>
+        <p>
+            <label for="percentageOfCommission">Pourcentage:</label>
+            <input type="text" id="percentageOfCommission" th:field="*{percentageOfCommission}" />
+        </p>
+        <p>
+            <label for="numberOfBusinessToBeAffiliated">Nombres d'affaires:</label>
+            <input type="text" id="numberOfBusinessToBeAffiliated" th:field="*{numberOfBusinessToBeAffiliated}" />
+        </p>
+        <p>
+            <label for="numberOfMonthsAffiliation">Nombre de mois:</label>
+            <input type="text" id="numberOfMonthsAffiliation" th:field="*{numberOfMonthsAffiliation}" />
+        </p>
+        <p>
+            <input type="submit" value="Submit" />
+        </p>
+    </form>
+</body>
+</html>
