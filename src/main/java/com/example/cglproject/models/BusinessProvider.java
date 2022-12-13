@@ -19,7 +19,9 @@ public class BusinessProvider {
     private Long id;
     private String firstname;
     private String lastname;
-    private boolean isSponsored;
+
+    @Column(nullable = true)
+    private boolean isSponsored = false;
 
     //TODO add the rest of the fields like the list of businesses and the id of BusinessProvider
 }
