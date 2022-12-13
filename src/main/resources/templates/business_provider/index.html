@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Business Provider</title>
+</head>
+<body>
+    <h1>Business Provider</h1>
+    <button th:onclick="|location.href='@{/business_providers/create}'|">Ajouter</button>
+    <table>
+        <thead>
+            <tr>
+                <td>First name</td>
+                <td>Last name</td>
+                <td>isSponsored</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="provider : ${providers}">
+                <td th:utext="${provider.firstname}"></td>
+                <td th:utext="${provider.lastname}"></td>
+                <td th:utext="${provider.isSponsored()}"></td>
+                <td>
+                    <a th:href="@{/business_providers/edit/{id}(id=${provider.id})}">Edit</a>
+                </td>
+                <td>
+                    <a th:href="@{/business_providers/delete/{id}(id=${provider.id})}">Delete</a>
+                </td>
+                <td>
+                    <a th:href="@{/business_providers/{id}(id=${provider.id})}">Show</a>
+                </td>
+        </tbody>
+    </table>
+</body>
+</html>

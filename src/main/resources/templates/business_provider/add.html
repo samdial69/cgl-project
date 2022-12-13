@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Business Provider</title>
+</head>
+<body>
+    <h1>Business Provider</h1>
+    <form action="#" th:action="@{/business_providers/create}" th:object="${provider}" method="post">
+        <p>
+            <label for="firstname">Firstname:</label>
+            <input type="text" id="firstname" th:field="*{firstname}" />
+        </p>
+        <p>
+            <label for="lastname">Lastname:</label>
+            <input type="text" id="lastname" th:field="*{lastname}" />
+        </p>
+        <p>
+            <label for="sponsor">Is Sponsored:</label>
+            <input type="checkbox" id="sponsor" th:field="*{sponsored}" />
+        </p>
+        <p>
+            <input type="submit" value="Submit" />
+        </p>
+    </form>
+</body>
+</html>
