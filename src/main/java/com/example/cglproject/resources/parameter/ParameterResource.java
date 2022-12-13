@@ -26,6 +26,7 @@ public class ParameterResource {
         List<Parameter> parameters = this.service.findAll();
         if(parameters.isEmpty()) {
             model.addAttribute("parameters", null);
+            //TODO return error page
         }
         model.addAttribute("parameters",parameters);
         log.info("model {}",model.getAttribute("parameter"));
@@ -50,6 +51,7 @@ public class ParameterResource {
         Optional<Parameter> parameter = this.service.findById(id);
         if(parameter.isEmpty()) {
             model.addAttribute("parameter", null);
+            //TODO return error page
         }
         model.addAttribute("parameter",parameter.get());
         return "parameter/edit";
