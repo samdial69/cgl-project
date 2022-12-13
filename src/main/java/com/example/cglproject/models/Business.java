@@ -19,7 +19,7 @@ public class Business {
     @Column(name = "id", nullable = false)
     private Long id;
     private String title;
-    private LocalDate createdAt;
+    private LocalDate createdAt = LocalDate.now();
 
     //TODO add the rest of the fields like the provider
 }
