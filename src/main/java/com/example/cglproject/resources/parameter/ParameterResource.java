@@ -25,12 +25,12 @@ public class ParameterResource {
     public String getParameter(Model model){
         List<Parameter> parameters = this.service.findAll();
         if(parameters.isEmpty()) {
-            model.addAttribute("parameters", null);
+            model.addAttribute("parametres", null);
             //TODO return error page
         }
         model.addAttribute("parameters",parameters);
         log.info("model {}",model.getAttribute("parameter"));
-        return "parameter/index";
+        return "parametres";
     }
 
     @GetMapping("/create")

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Commission</title>
+</head>
+<body>
+  <h1>Commission</h1>
+  <form th:action="@{/commission/edit/{id}(id=${commission.id})}" th:object="${commission}" method="post">
+    <p>
+      <label for="businessCommission">Commission associé:</label>
+      <input type="text" id="businessCommission" th:field="*{businessCommission}" />
+    </p>
+    <p>
+      <label for="businessProviderCommission">Commission apporteur d'affaires:</label>
+      <input type="text" id="businessProviderCommission" th:field="*{businessProviderCommission}" />
+    </p>
+    <p>
+      <input type="submit" value="Submit" />
+    </p>
+  </form>
+</body>
+</html>
