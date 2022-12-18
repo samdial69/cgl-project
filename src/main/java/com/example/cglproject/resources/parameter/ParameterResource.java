@@ -54,7 +54,7 @@ public class ParameterResource {
             //TODO return error page
         }
         model.addAttribute("parameter",parameter.get());
-        return "parameter/edit";
+        return "parameter";
     }
 
     @PostMapping("/edit/{id}")
