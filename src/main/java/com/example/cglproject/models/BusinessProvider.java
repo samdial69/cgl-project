@@ -1,9 +1,6 @@
 package com.example.cglproject.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -19,6 +16,8 @@ public class BusinessProvider {
     private Long id;
     private String firstname;
     private String lastname;
+    @Column(nullable = true)
+    private Long idParrain;
 
     @Column(nullable = true)
     private boolean isSponsored = false;

@@ -29,7 +29,7 @@ public class ParameterResource {
             //TODO return error page
         }
         model.addAttribute("parameters",parameters);
-        log.info("model {}",model.getAttribute("parameter"));
+        log.info("model {}",model.getAttribute("parametres"));
         return "parametres";
     }
 
@@ -43,7 +43,7 @@ public class ParameterResource {
     public String create(@ModelAttribute("parameter") Parameter parameter){
         log.info("Parameter: {}",parameter);
         service.save(parameter);
-        return "redirect:/parameters/";
+        return "redirect:/parametres";
     }
 
     @GetMapping("/edit/{id}")

@@ -1,15 +1,13 @@
 package com.example.cglproject.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Data
+@Table(name="business")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

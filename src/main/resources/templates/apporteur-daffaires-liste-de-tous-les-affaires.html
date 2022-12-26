@@ -16,11 +16,11 @@
 <body>
   <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar w-nav">
     <div class="w-container">
-      <a th:href="home.html" class="w-nav-brand">
+      <a th:href="@{/}" class="w-nav-brand">
         <h1 class="heading">Afferly</h1>
       </a>
       <nav role="navigation" class="w-nav-menu">
-        <a href="#" class="link-block w-inline-block"><img th:src="@{/images/settings_black_48dp.svg}" loading="lazy" alt=""></a>
+        <a th:href="@{/parameters/}" class="link-block w-inline-block"><img th:src="@{/images/settings_black_48dp.svg}" loading="lazy" alt=""></a>
       </nav>
       <div class="w-nav-button">
         <div class="w-icon-nav-menu"></div>
