@@ -55,6 +55,8 @@ public class BusinessProviderController {
         return mav;
     }
 
+
+
     @GetMapping("/deleteBusinessProvider")
     public String deleteBusinessProvider(@RequestParam Long businessPId) {
         eRepo.deleteById(businessPId);

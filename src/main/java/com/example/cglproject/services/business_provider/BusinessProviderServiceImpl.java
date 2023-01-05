@@ -1,7 +1,9 @@
 package com.example.cglproject.services.business_provider;
 
+import com.example.cglproject.models.Business;
 import com.example.cglproject.models.BusinessProvider;
 import com.example.cglproject.repositories.BusinessProviderRepository;
+import com.example.cglproject.repositories.BusinessRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,9 +18,11 @@ import java.util.Optional;
 @Slf4j
 public class BusinessProviderServiceImpl implements IBusinesProviderService {
     private final BusinessProviderRepository service;
+    private final BusinessRepository serviceBusiness;
 
-    public BusinessProviderServiceImpl(BusinessProviderRepository service) {
+    public BusinessProviderServiceImpl(BusinessProviderRepository service, BusinessRepository serviceBusiness) {
         this.service = service;
+        this.serviceBusiness = serviceBusiness;
     }
     @Override
     public Page<BusinessProvider> getAllBusinessProviders(Pageable pageable) {
@@ -65,4 +69,11 @@ public class BusinessProviderServiceImpl implements IBusinesProviderService {
         }
         return false;
     }
+
+    @Override
+    public List<Business> findByIdBusinessProvider(Long IdBusinessProvider) {
+        return this.serviceBusiness.findByIdBusinessProvider(IdBusinessProvider);
+    }
+
+
 }

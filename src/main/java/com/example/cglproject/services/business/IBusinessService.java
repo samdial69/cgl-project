@@ -20,4 +20,5 @@ public interface IBusinessService {
     Business update(Long id, Business business);
 
     boolean delete(Long id);
+
 }

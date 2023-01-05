@@ -19,5 +19,8 @@ public class Business {
     private String title;
     private LocalDate createdAt = LocalDate.now();
 
+    @Column(nullable = false)
+    private Long IdBusinessProvider;
+
     //TODO add the rest of the fields like the provider
 }

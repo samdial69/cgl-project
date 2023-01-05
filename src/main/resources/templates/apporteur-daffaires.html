@@ -24,7 +24,7 @@
         <h1 class="heading">Afferly</h1>
       </a>
       <nav role="navigation" class="w-nav-menu">
-        <a th:href="@{/parameters/}" class="link-block w-inline-block"><img th:src="@{/images/settings_black_48dp.svg}" loading="lazy" alt=""></a>
+        <a th:href="@{/parametres/}" class="link-block w-inline-block"><img th:src="@{/images/settings_black_48dp.svg}" loading="lazy" alt=""></a>
       </nav>
       <div class="w-nav-button">
         <div class="w-icon-nav-menu"></div>
@@ -32,7 +32,7 @@
     </div>
   </div>
   <div class="div-block">
-    <h1 class="heading-3">Apporteur d&#x27;affaires</h1>
+    <h1 class="heading-3">Les apporteurs d&#x27;affaires</h1>
     <div class="columns w-row">
       <div class="column w-col w-col-4">
         <div class="div-block-2">
@@ -59,6 +59,7 @@
         <th>Prénom</th>
         <th>Nom</th>
         <th>Parrainé ?</th>
+        <th>IdParrain</th>
         <th>Actions</th>
       </tr>
       </thead>
@@ -68,8 +69,11 @@
         <td th:text="${businessProvider.firstname}" />
         <td th:text="${businessProvider.lastname}" />
         <td th:text="${businessProvider.isSponsored}" />
+        <td th:text="${businessProvider.idParrain}"></td>
         <td>
-          <a th:href="@{/showUpdateBPForm(businessPId=${businessProvider.id})}" class="btn btn-info">Éditer</a>
+          <a th:href="@{/business_providers/viewBusinessProvider(businessPId=${businessProvider.id})}" class="btn btn-info">Voir</a>
+
+          <a th:href="@{/showUpdateBPForm(businessPId=${businessProvider.id})}" class="btn btn-info ml-2">Éditer</a>
 
           <a th:href="@{/deleteBusinessProvider(businessPId=${businessProvider.id})}" class="btn btn-danger ml-2">Supprimer</a>
         </td>

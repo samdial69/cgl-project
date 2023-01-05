@@ -1,6 +1,8 @@
 package com.example.cglproject.resources.business_provider;
 
 import com.example.cglproject.models.BusinessProvider;
+import com.example.cglproject.repositories.BusinessRepository;
+import com.example.cglproject.services.business.BusinessServiceImpl;
 import com.example.cglproject.services.business_provider.BusinessProviderServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -17,7 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class RestBusinessProviderResource {
     private final BusinessProviderServiceImpl service;
-    public RestBusinessProviderResource(BusinessProviderServiceImpl service) {
+
+    public RestBusinessProviderResource(BusinessProviderServiceImpl service, BusinessServiceImpl serviceBusiness) {
         this.service = service;
     }
 

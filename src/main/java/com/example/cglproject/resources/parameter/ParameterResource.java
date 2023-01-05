@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/parameters")
+@RequestMapping("/parametres")
 @Slf4j
 public class ParameterResource {
     private final ParameterServiceImpl service;
@@ -25,18 +25,18 @@ public class ParameterResource {
     public String getParameter(Model model){
         List<Parameter> parameters = this.service.findAll();
         if(parameters.isEmpty()) {
-            model.addAttribute("parametres", null);
+            model.addAttribute("parameters", null);
             //TODO return error page
         }
         model.addAttribute("parameters",parameters);
-        log.info("model {}",model.getAttribute("parametres"));
+        log.info("model {}",model.getAttribute("parameter"));
         return "parametres";
     }
 
     @GetMapping("/create")
     public String form(Model model){
         model.addAttribute("parameter",new Parameter());
-        return "parameter/add";
+        return "parametres";
     }
 
     @PostMapping("/create")
@@ -54,21 +54,21 @@ public class ParameterResource {
             //TODO return error page
         }
         model.addAttribute("parameter",parameter.get());
-        return "parameter";
+        return "parametres";
     }
 
     @PostMapping("/edit/{id}")
     public String update(@PathVariable("id") Long id,@ModelAttribute("parameter") Parameter parameter){
         log.info("Parameter updated by id {}: {}",id,parameter);
         service.update(id,parameter);
-        return "redirect:/parameters/";
+        return "redirect:/parametres/";
     }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Long id){
         log.info("Parameter delete by id: {}",id);
         service.delete(id);
-        return "redirect:/parameters/";
+        return "redirect:/parametres/";
     }
 
 }

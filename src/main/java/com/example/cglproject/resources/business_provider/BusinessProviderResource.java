@@ -1,12 +1,16 @@
 package com.example.cglproject.resources.business_provider;
 
+import com.example.cglproject.models.Business;
 import com.example.cglproject.models.BusinessProvider;
+import com.example.cglproject.services.business.BusinessServiceImpl;
 import com.example.cglproject.services.business_provider.BusinessProviderServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -14,7 +18,7 @@ import java.util.Optional;
 @Slf4j
 public class BusinessProviderResource {
     private final BusinessProviderServiceImpl service;
-    public BusinessProviderResource(BusinessProviderServiceImpl service) {
+    public BusinessProviderResource(BusinessProviderServiceImpl service, BusinessServiceImpl serviceBusiness) {
         this.service = service;
     }
 
@@ -76,5 +80,14 @@ public class BusinessProviderResource {
         log.info("Deleting business provider with id: {}",id);
         service.delete(id);
         return "redirect:/business_providers/";
+    }
+
+    @GetMapping("/viewBusinessProvider")
+    public ModelAndView ViewBusinessProvider(@RequestParam Long businessPId) {
+        ModelAndView mav = new ModelAndView("apporteur-daffaires-liste-de-tous-les-affaires");
+        Optional<BusinessProvider> businessProvider = this.service.getById(businessPId);
+        mav.addObject("businessProvider", businessProvider.get());
+        mav.addObject("businesses", this.service.findByIdBusinessProvider(businessPId));
+        return mav;
     }
 }

@@ -32,4 +32,13 @@ public class MainRessource {
         log.info("model {}",model.getAttribute("tous les affaires"));
         return "apporteur-daffaires";
     }
+
+    @GetMapping("/business/un-AppDaff-directes")
+    public String getOneBusinessProviderD(Model model){
+        log.info("model {}",model.getAttribute("un apporteur d'affaire : les affaires directes"));
+        return "apporteur-daffaires-liste-des-affaires-directes";
+    }
+
+
+
 }
