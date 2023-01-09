@@ -17,8 +17,7 @@ public class BusinessProvider {
     private String firstname;
     private String lastname;
     private Long idParrain;
-
-
+    
     private boolean isSponsored = false;
 
     //TODO add the rest of the fields like the list of businesses and the id of BusinessProvider

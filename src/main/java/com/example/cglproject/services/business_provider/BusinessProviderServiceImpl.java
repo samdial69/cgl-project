@@ -75,5 +75,9 @@ public class BusinessProviderServiceImpl implements IBusinesProviderService {
         return this.serviceBusiness.findByIdBusinessProvider(IdBusinessProvider);
     }
 
+    @Override
+    public List<Business> findByIdBusinessProviderAndAffile(Long IdBusinessProvider) {
+        return this.serviceBusiness.findByIdBusinessProviderAndIsSponsored(IdBusinessProvider);
+    }
 
 }

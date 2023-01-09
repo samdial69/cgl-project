@@ -24,7 +24,7 @@
         <h1 class="heading">Afferly</h1>
       </a>
       <nav role="navigation" class="w-nav-menu">
-        <a th:href="@{/parametres/}" class="link-block w-inline-block"><img th:src="@{/images/settings_black_48dp.svg}" loading="lazy" alt=""></a>
+        <a th:href="@{/parametres/create}" class="link-block w-inline-block"><img th:src="@{/images/settings_black_48dp.svg}" loading="lazy" alt=""></a>
       </nav>
       <div class="w-nav-button">
         <div class="w-icon-nav-menu"></div>
@@ -71,7 +71,7 @@
         <td th:text="${businessProvider.isSponsored}" />
         <td th:text="${businessProvider.idParrain}"></td>
         <td>
-          <a th:href="@{/business_providers/viewBusinessProvider(businessPId=${businessProvider.id})}" class="btn btn-info">Voir</a>
+          <a id="buttonSee" th:href="@{/business_providers/viewBusinessProvider(businessPId=${businessProvider.id})}" class="btn btn-info">Voir</a>
 
           <a th:href="@{/showUpdateBPForm(businessPId=${businessProvider.id})}" class="btn btn-info ml-2">Éditer</a>
 
