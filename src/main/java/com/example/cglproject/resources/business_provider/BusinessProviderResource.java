@@ -99,4 +99,13 @@ public class BusinessProviderResource {
         mav.addObject("businesses", this.service.findByIdBusinessProviderAndAffile(businessPId));
         return mav;
     }
+
+    @GetMapping("/viewBusinessProviderParrains")
+    public ModelAndView ViewBusinessProviderParrains(@RequestParam Long businessPId) {
+        ModelAndView mav = new ModelAndView("apporteur-daffaires-liste-des-parrains");
+        Optional<BusinessProvider> businessProvider = this.service.getById(businessPId);
+        mav.addObject("businessProvider", businessProvider.get());
+        mav.addObject("businesses", this.service.findByIdBusinessProviderAndAffile(businessPId));
+        return mav;
+    }
 }
