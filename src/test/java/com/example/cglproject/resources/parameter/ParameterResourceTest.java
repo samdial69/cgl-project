@@ -25,6 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -58,8 +59,8 @@ class ParameterResourceTest {
         given(service.findAll()).willReturn(parameters);
 
         //then
-        MockHttpServletResponse response =  mockMvc.perform(MockMvcRequestBuilders
-                .get("/parameters/"))
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders
+                        .get("/parameters/"))
                 .andDo(print())
                 .andExpect(view().name("parameter/index"))
                 .andExpect(model().attributeExists("parameters"))
@@ -77,8 +78,8 @@ class ParameterResourceTest {
         given(service.save(any(Parameter.class))).willReturn(parameter);
 
         //then
-        MockHttpServletResponse response =  mockMvc.perform(MockMvcRequestBuilders
-                .post("/parameters/create")
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders
+                        .post("/parameters/create")
                         .content(new ObjectMapper().writeValueAsString(parameter))
                         .contentType("application/json"))
                 .andDo(print())
@@ -95,8 +96,8 @@ class ParameterResourceTest {
         given(service.findById(any(Long.class))).willReturn(Optional.of(parameter));
 
         //then
-        MockHttpServletResponse response =  mockMvc.perform(MockMvcRequestBuilders
-                .get("/parameters/edit/1"))
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders
+                        .get("/parameters/edit/1"))
                 .andDo(print())
                 .andExpect(view().name("parameter/edit"))
                 .andExpect(model().attributeExists("parameter"))
@@ -105,19 +106,24 @@ class ParameterResourceTest {
 
     }
 
-//TODO: fix this test
-//    void givenFakeId_whenEdit_thenNotFound() throws Exception {
-//        //when
-//        given(service.findById(any(Long.class))).willReturn(Optional.empty());
-//
-//        //then
-//        MockHttpServletResponse response =  mockMvc.perform(MockMvcRequestBuilders
-//                .get("/parameters/edit/1"))
-//                .andDo(print())
-////                .andExpect(status().isNotFound())
-//                .andReturn().getResponse();
-//
-//    }
+    //TODO: Test when find by id and not found then return 404
+
+    @Test
+    void givenFakeId_whenEdit_thenReturn404NotFound() throws Exception {
+        //when
+        when(service.findById(any(Long.class))).thenReturn(Optional.empty());
+
+        //then
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders
+                        .get("/parameters/edit/{id}", 1))
+                .andDo(print())
+                .andExpect(view().name("errors/error404"))
+//                .andExpect(model().attributeExists("parameter"))
+                .andExpect(model().attributeDoesNotExist("parameter"))
+//                .andExpect(model().attribute("parameter",null))
+                .andReturn().getResponse();
+
+    }
 
     @Test
     void update() throws Exception {
@@ -126,8 +132,8 @@ class ParameterResourceTest {
         given(service.update(any(Long.class), any(Parameter.class))).willReturn(parameter);
 
         //then
-        MockHttpServletResponse response =  mockMvc.perform(MockMvcRequestBuilders
-                .post("/parameters/edit/1")
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders
+                        .post("/parameters/edit/1")
                         .content(new ObjectMapper().writeValueAsString(parameter))
                         .contentType("application/json"))
                 .andDo(print())
@@ -136,17 +142,16 @@ class ParameterResourceTest {
                 .andReturn().getResponse();
     }
 
-    //TODO: Test when find by id and not found then return 404
-
 
     @Test
     void delete() throws Exception {
         //when
+        given(service.findById(any(Long.class))).willReturn(Optional.of(parameter));
         given(service.delete(any(Long.class))).willReturn(true);
 
         //then
-        MockHttpServletResponse response =  mockMvc.perform(MockMvcRequestBuilders
-                .get("/parameters/delete/1"))
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders
+                        .get("/parameters/delete/1"))
                 .andDo(print())
                 .andExpect(view().name("redirect:/parameters/"))
                 .andExpect(status().is3xxRedirection())
@@ -154,4 +159,19 @@ class ParameterResourceTest {
     }
 
     //TODO: Test when delete and not found then return 404
+
+    @Test
+    void givenFakeId_whenDelete_thenReturn404NotFound() throws Exception {
+        //when
+        when(service.delete(any(Long.class))).thenReturn(false);
+
+        //then
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders
+                        .get("/parameters/delete/{id}", 1))
+                .andDo(print())
+                .andExpect(view().name("errors/error404"))
+                .andExpect(model().attributeDoesNotExist("parameter"))
+                .andReturn().getResponse();
+
+    }
 }

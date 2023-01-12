@@ -51,7 +51,7 @@ public class ParameterResource {
         Optional<Parameter> parameter = this.service.findById(id);
         if(parameter.isEmpty()) {
             model.addAttribute("parameter", null);
-            //TODO return error page
+            return "errors/error404";
         }
         model.addAttribute("parameter",parameter.get());
         return "parameter/edit";
@@ -66,6 +66,10 @@ public class ParameterResource {
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Long id){
+        Optional<Parameter> parameter = this.service.findById(id);
+        if(parameter.isEmpty()) {
+            return "errors/error404";
+        }
         log.info("Parameter delete by id: {}",id);
         service.delete(id);
         return "redirect:/parameters/";
