@@ -5,6 +5,7 @@ import com.example.cglproject.services.parameter.ParameterServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -51,10 +52,9 @@ class ParameterResourceTest {
     }
 
     @Test
-    void getParameter() throws Exception {
+    void whenGetParameterIsNotEmpty_thenReturnListOfParameters() throws Exception {
         //given
         List<Parameter> parameters = List.of(parameter);
-
         //when
         given(service.findAll()).willReturn(parameters);
 
@@ -73,7 +73,41 @@ class ParameterResourceTest {
     }
 
     @Test
-    void create() throws Exception {
+    void whenGetParameterIsEmpty_thenReturnError404() throws Exception {
+        //given
+        List<Parameter> parameters = List.of();
+        //when
+        given(service.findAll()).willReturn(List.of());
+        //then
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders
+                        .get("/parameters/"))
+                .andDo(print())
+                .andExpect(view().name("errors/error404"))
+                .andExpect(model().attributeDoesNotExist("parameters"))
+                .andReturn().getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(200);
+        assertThat(response.getContentType()).isEqualTo("text/html;charset=UTF-8");
+        assertThat(response.getContentAsString()).contains("Error");
+    }
+
+    @Test
+    void whenCreateParameter_thenReturnForm() throws Exception {
+        //then
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders
+                        .get("/parameters/create"))
+                .andDo(print())
+                .andExpect(view().name("parameter/add"))
+                .andExpect(model().attributeExists("parameter"))
+                .andExpect(model().attribute("parameter", new Parameter()))
+                .andReturn().getResponse();
+
+        assertThat(response.getStatus()).isEqualTo(200);
+        assertThat(response.getContentType()).isEqualTo("text/html;charset=UTF-8");
+    }
+
+    @Test
+    void whenCreateParameter_thenReturnSuccessAfterSubmit() throws Exception {
         //when
         given(service.save(any(Parameter.class))).willReturn(parameter);
 
@@ -86,12 +120,11 @@ class ParameterResourceTest {
                 .andExpect(view().name("redirect:/parameters/"))
                 .andExpect(status().is3xxRedirection())
                 .andReturn().getResponse();
-
-//        assertThat(response.getStatus()).isEqualTo(status().is3xxRedirection().);
     }
 
+
     @Test
-    void edit() throws Exception {
+    void whenEditParameter_thenReturnFormWithParameter() throws Exception {
         //when
         given(service.findById(any(Long.class))).willReturn(Optional.of(parameter));
 
@@ -109,6 +142,7 @@ class ParameterResourceTest {
     //TODO: Test when find by id and not found then return 404
 
     @Test
+    @DisplayName("When returning form for edit and parameter not found by the id used")
     void givenFakeId_whenEdit_thenReturn404NotFound() throws Exception {
         //when
         when(service.findById(any(Long.class))).thenReturn(Optional.empty());
@@ -118,19 +152,16 @@ class ParameterResourceTest {
                         .get("/parameters/edit/{id}", 1))
                 .andDo(print())
                 .andExpect(view().name("errors/error404"))
-//                .andExpect(model().attributeExists("parameter"))
                 .andExpect(model().attributeDoesNotExist("parameter"))
-//                .andExpect(model().attribute("parameter",null))
                 .andReturn().getResponse();
 
     }
 
     @Test
-    void update() throws Exception {
-
+    @DisplayName("When edit parameter then return success after submit")
+    void givenExistingId_whenUpdateParameter_thenReturnSuccess() throws Exception {
         //when
         given(service.update(any(Long.class), any(Parameter.class))).willReturn(parameter);
-
         //then
         MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders
                         .post("/parameters/edit/1")
@@ -142,9 +173,26 @@ class ParameterResourceTest {
                 .andReturn().getResponse();
     }
 
+    @Test
+    @DisplayName("Form submit when service didn't find parameter then return 404")
+    void givenFakeId_whenSendUpdateParameterForm_thenReturn404NotFound() throws Exception {
+        //when
+        given(service.update(any(Long.class), any(Parameter.class))).willReturn(null);
+        //then
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders
+                        .post("/parameters/edit/1")
+                        .content(new ObjectMapper().writeValueAsString(parameter))
+                        .contentType("application/json"))
+                .andDo(print())
+                .andExpect(view().name("errors/error404"))
+                .andExpect(model().attributeExists("parameter"))
+                .andReturn().getResponse();
+    }
+
 
     @Test
-    void delete() throws Exception {
+    @DisplayName("Delete parameter by id")
+    void givenExistingId_whenDelete_thenReturnSuccess() throws Exception {
         //when
         given(service.findById(any(Long.class))).willReturn(Optional.of(parameter));
         given(service.delete(any(Long.class))).willReturn(true);
@@ -157,10 +205,8 @@ class ParameterResourceTest {
                 .andExpect(status().is3xxRedirection())
                 .andReturn().getResponse();
     }
-
-    //TODO: Test when delete and not found then return 404
-
     @Test
+    @DisplayName("When delete parameter with fake id then return 404")
     void givenFakeId_whenDelete_thenReturn404NotFound() throws Exception {
         //when
         when(service.delete(any(Long.class))).thenReturn(false);
