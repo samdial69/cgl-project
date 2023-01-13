@@ -52,6 +52,7 @@ public class BusinessProviderServiceImpl implements IBusinesProviderService {
         return this.service.findById(id);
     }
 
+    // TODO: supprimer l'apporteur original et ne donner que les parrains
     @Override
     public List<BusinessProvider> getProviderAndAllSponsors(Long id) {
         List<BusinessProvider> result = new ArrayList<BusinessProvider>();

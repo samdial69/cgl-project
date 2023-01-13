@@ -20,7 +20,7 @@ public class BusinessProvider {
     private String lastname;
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name= "id_parrain")
+    @JoinColumn(name= "id_parrain", nullable = true)
     private BusinessProvider sponsor;
 
     @OneToMany(mappedBy="provider", fetch=FetchType.LAZY)
@@ -40,7 +40,7 @@ public class BusinessProvider {
     public boolean isAffiliated(Parameter parameter) {
         int businessesToValidate = parameter.getNumberOfBusinessToBeAffiliated();
         int validBusinesses = 0;
-        if (businessesToValidate == 0) {
+        if (businessesToValidate >= 0) {
             return true;
         }
         List<Business> businesses = this.getBusinesses();

@@ -86,12 +86,14 @@ public class BusinessServiceImpl implements IBusinessService {
             if (currentSponsor == null) {
                 sponsorsToCommission = 0;
             } else {
-                currentCommission = new Commission();
-                currentCommission.setBusiness(business);
-                currentCommission.setRecipient(currentSponsor);
-                currentCommission.setCommission(nextCommission);
-                allSponsorCommissions += nextCommission;
-                commissions.add(currentCommission);
+                if (currentSponsor.isAffiliated(parameter)) {
+                    currentCommission = new Commission();
+                    currentCommission.setBusiness(business);
+                    currentCommission.setRecipient(currentSponsor);
+                    currentCommission.setCommission(nextCommission);
+                    allSponsorCommissions += nextCommission;
+                    commissions.add(currentCommission);
+                }
                 sponsorsToCommission--;
                 nextCommission = nextCommission * nextCommissionMultiplier; // first one is multiplied with a different number
             }
