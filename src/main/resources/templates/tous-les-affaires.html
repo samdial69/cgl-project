@@ -63,6 +63,8 @@
         <th>Id</th>
         <th>Titre</th>
         <th>Date de création</th>
+        <th>Apporteur</th>
+        <th>Commission globale</th>
         <th>Actions</th>
       </tr>
       </thead>
@@ -71,6 +73,8 @@
         <td th:text="${business.id}" />
         <td th:text="${business.title}" />
         <td th:text="${business.createdAt}" />
+        <td th:text="${business.provider.firstname} + ' ' + ${business.provider.lastname}" />
+        <td th:text="${business.getGlobalCommission()}"/>
         <td>
           <a th:href="@{/showUpdateForm(businessId=${business.id})}" class="btn btn-info">Éditer</a>
 

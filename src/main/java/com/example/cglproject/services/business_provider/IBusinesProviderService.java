@@ -15,11 +15,12 @@ public interface IBusinesProviderService {
     List<BusinessProvider> getAllBusinessProviders();
 
     Optional<BusinessProvider> getById(Long id);
+    List<BusinessProvider> getProviderAndAllSponsors(Long id);
     BusinessProvider create(BusinessProvider businessProvider);
     BusinessProvider update(Long id, BusinessProvider businessProvider);
 
     boolean delete(Long id);
-
+    boolean delete(BusinessProvider businessProvider);
 
     List<Business> findByIdBusinessProvider(Long IdBusinessProvider);
 

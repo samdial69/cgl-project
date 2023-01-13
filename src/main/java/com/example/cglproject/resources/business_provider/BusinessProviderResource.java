@@ -4,6 +4,7 @@ import com.example.cglproject.models.Business;
 import com.example.cglproject.models.BusinessProvider;
 import com.example.cglproject.services.business.BusinessServiceImpl;
 import com.example.cglproject.services.business_provider.BusinessProviderServiceImpl;
+import com.example.cglproject.services.parameter.IParameterService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,8 +19,10 @@ import java.util.Optional;
 @Slf4j
 public class BusinessProviderResource {
     private final BusinessProviderServiceImpl service;
-    public BusinessProviderResource(BusinessProviderServiceImpl service, BusinessServiceImpl serviceBusiness) {
+    private IParameterService parameterService;
+    public BusinessProviderResource(BusinessProviderServiceImpl service, IParameterService parameterService) {
         this.service = service;
+        this.parameterService = parameterService;
     }
 
     @GetMapping("/")
@@ -105,7 +108,8 @@ public class BusinessProviderResource {
         ModelAndView mav = new ModelAndView("apporteur-daffaires-liste-des-parrains");
         Optional<BusinessProvider> businessProvider = this.service.getById(businessPId);
         mav.addObject("businessProvider", businessProvider.get());
-        mav.addObject("businesses", this.service.findByIdBusinessProviderAndAffile(businessPId));
+        mav.addObject("businessProviders", this.service.getProviderAndAllSponsors(businessPId));
+        mav.addObject("parameter", parameterService.getApplicationParameters());
         return mav;
     }
 }
