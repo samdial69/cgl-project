@@ -58,7 +58,7 @@
         <th>Id</th>
         <th>Prénom</th>
         <th>Nom</th>
-        <th>Parrainé ?</th>
+        <th>Affilié ?</th>
         <th>IdParrain</th>
         <th>Actions</th>
       </tr>
@@ -68,8 +68,12 @@
         <td th:text="${businessProvider.id}" />
         <td th:text="${businessProvider.firstname}" />
         <td th:text="${businessProvider.lastname}" />
-        <td th:text="${businessProvider.isSponsored}" />
-        <td th:text="${businessProvider.idParrain}"></td>
+        <td>
+          <span th:if="${businessProvider.isAffiliated(parameter)}" th:text="oui"></span>
+        </td>
+        <td>
+          <span th:if="${businessProvider.sponsor != null}" th:text="${businessProvider.sponsor.firstname} + ' ' + ${businessProvider.sponsor.lastname}"></span>
+        </td>
         <td>
           <a id="buttonSee" th:href="@{/business_providers/viewBusinessProvider(businessPId=${businessProvider.id})}" class="btn btn-info">Voir</a>
 

@@ -43,7 +43,8 @@ class ParameterResourceTest {
         this.parameter = Parameter.builder()
                 .id(1L)
                 .levelOfSponsorship(5)
-                .percentageOfCommission(0.2)
+                .percentageOfInitialCommission(0.2)
+                .percentageOfNextCommission(0.5)
                 .numberOfBusinessToBeAffiliated(2)
                 .numberOfMonthsAffiliation(2)
                 .build();

@@ -20,4 +20,6 @@ public interface ICommissionService {
     Commission update(Long id, Commission commission);
 
     boolean delete(Long id);
+    boolean delete(Commission commission);
+    boolean delete(List<Commission> commissions);
 }

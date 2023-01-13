@@ -63,7 +63,7 @@
         <th>Situation</th>
         <th>Titre</th>
         <th>Date</th>
-        <th>Commissions associes</th>
+        <th>Commissions globale</th>
         <th>Commissions de l'apporteur d'affaires</th>
         <th>Voir le parrain</th>
         <th>Voir le filleul</th>
@@ -76,13 +76,14 @@
         <td th:text="situation" />
         <td th:text="${business.title}" />
         <td th:text="${business.createdAt}" />
-        <td th:text="commission_associees"/>
+        <td th:text="${business.getGlobalCommission()}"/>
         <td th:text="commission_app_affaires"/>
         <td>
-          <a th:href="@{/viewBusinessProvider(businessPId=${businessProvider.idParrain})}" class="btn btn-info" id="buttonParrain">Voir Parrain</a>
+          <a th:if="${businessProvider.sponsor != null}"
+             th:href="@{/viewBusinessProvider(businessPId=${businessProvider.sponsor.id})}" class="btn btn-info" id="buttonParrain">Voir Parrain</a>
         </td>
         <td>
-          <a th:href="@{/viewBusinessProvider(businessPId=${businessProvider.idParrain})}" class="btn btn-info" id="buttonFilleul">Voir Filleul</a>
+          <a th:href="@{/viewBusinessProvider(businessPId=${businessProvider.id})}" class="btn btn-info" id="buttonFilleul">Voir Filleul</a>
         </td>
         <td>
           <a th:href="@{/showUpdateForm(businessId=${business.id})}" class="btn btn-info">Éditer</a>

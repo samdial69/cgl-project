@@ -36,13 +36,12 @@
 
     <input type="text" th:field="*{firstname}" class="form-control col-4 mb-4" placeholder="Entrez un prénom" />
     <input type="text" th:field="*{lastname}" class="form-control col-4 mb-4" placeholder="Entrez un nom" />
-    <label>Affilié ? :</label>
-    <input type="checkbox" name="active" th:checked="*{isSponsored}"/>
     <br/>
     <br/>
     <label>Veuillez choisir un parrain :</label>
-    <select th:field="*{idParrain}" onChange="onstatechange(this)" th:style="'padding:10px'">
-      <option th:each="businessProviderP: ${businessProviders}" th:value="${businessProviderP.idParrain}" th:text="${businessProviderP.firstname}+ ' ' + ${businessProviderP.lastname} + ' ' + ${businessProviderP.id}"></option>
+    <select class="form-control col-4 mb-4" th:field="*{sponsor.id}" onChange="onstatechange(this)" th:style="'padding:10px'">
+      <option value="">Sélectionnez un parrain</option>
+      <option th:each="businessProviderP: ${businessProviders}" th:value="${businessProviderP.id}" th:text="${businessProviderP.firstname}+ ' ' + ${businessProviderP.lastname} + ' ' + ${businessProviderP.id}"></option>
     </select>
     <br/>
     <br/>

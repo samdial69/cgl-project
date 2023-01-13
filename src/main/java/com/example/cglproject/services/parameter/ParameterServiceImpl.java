@@ -14,10 +14,32 @@ import java.util.Optional;
 @Slf4j
 public class ParameterServiceImpl implements IParameterService {
 
+    private Parameter currentParameter;
     private final ParameterRepository parameterRepository;
 
     public ParameterServiceImpl(ParameterRepository parameterRepository) {
         this.parameterRepository = parameterRepository;
+    }
+
+    @Override
+    public Parameter getApplicationParameters() {
+        if (this.currentParameter != null) {
+            return this.currentParameter;
+        }
+        List<Parameter> allParameters = this.parameterRepository.findAll();
+        if (allParameters.isEmpty()) {
+            // the database does not have parameters
+            return new Parameter(0L, 5, 5, 50, 1, 3);
+        } else {
+            Parameter best = allParameters.get(0);
+            for (Parameter param: allParameters) {
+                if (param.getId() > best.getId()) {
+                    best = param;
+                }
+            }
+            this.currentParameter = best;
+            return this.currentParameter;
+        }
     }
 
     @Override
@@ -35,6 +57,7 @@ public class ParameterServiceImpl implements IParameterService {
     @Override
     public Parameter save(Parameter parameter) {
         log.info("Creating a new parameter : {}",parameter);
+        this.currentParameter = parameter;
         return this.parameterRepository.save(parameter);
     }
 

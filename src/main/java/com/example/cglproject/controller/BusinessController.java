@@ -1,7 +1,11 @@
 package com.example.cglproject.controller;
 
 import com.example.cglproject.models.Business;
+import com.example.cglproject.models.BusinessProvider;
+import com.example.cglproject.repositories.BusinessProviderRepository;
 import com.example.cglproject.repositories.BusinessRepository;
+import com.example.cglproject.services.business.IBusinessService;
+import com.example.cglproject.services.business_provider.IBusinesProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,10 +14,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+import java.util.Optional;
+
 @Controller
 public class BusinessController {
-    @Autowired
+
     private BusinessRepository eRepo;
+    private IBusinesProviderService providerService;
+    private IBusinessService businessService;
+
+    public BusinessController(BusinessRepository eRepo, IBusinesProviderService providerService, IBusinessService businessService) {
+        this.eRepo = eRepo;
+        this.providerService = providerService;
+        this.businessService = businessService;
+    }
 
     @GetMapping({"/all-businesses"})
     public ModelAndView getAllBusiness() {
@@ -25,14 +40,14 @@ public class BusinessController {
     @GetMapping("/addBusinessForm")
     public ModelAndView addBusinessForm() {
         ModelAndView mav = new ModelAndView("businessOPages/add-businesses");
-        Business newBusiness = new Business();
-        mav.addObject("business", newBusiness);
+        List<BusinessProvider> businessProviders = providerService.getAllBusinessProviders();
+        mav.addObject("businessProviders", businessProviders);
         return mav;
     }
 
     @PostMapping("/saveBusiness")
-    public String saveBusiness(@ModelAttribute Business business) {
-        eRepo.save(business);
+    public String saveBusiness(@RequestParam String title, @RequestParam long providerId, @RequestParam double initialCommission) {
+        this.businessService.create(title, initialCommission, providerId);
         return "redirect:/all-businesses";
     }
 
@@ -46,7 +61,7 @@ public class BusinessController {
 
     @GetMapping("/deleteBusiness")
     public String deleteBusiness(@RequestParam Long businessId) {
-        eRepo.deleteById(businessId);
+        providerService.delete(businessId);
         return "redirect:/all-businesses";
     }
 }

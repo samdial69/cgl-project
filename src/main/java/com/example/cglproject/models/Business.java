@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -19,8 +20,18 @@ public class Business {
     private String title;
     private LocalDate createdAt = LocalDate.now();
 
-    @Column(nullable = false)
-    private Long IdBusinessProvider;
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name= "id_business_provider")
+    private BusinessProvider provider;
 
-    //TODO add the rest of the fields like the provider
+    @OneToMany(mappedBy="business", fetch=FetchType.LAZY)
+    private List<Commission> commissions;
+
+    public double getGlobalCommission() {
+        double result = 0;
+        for (Commission commission : this.commissions) {
+            result += commission.getCommission();
+        }
+        return result;
+    }
 }

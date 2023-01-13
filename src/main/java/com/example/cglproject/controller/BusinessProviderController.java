@@ -4,6 +4,8 @@ import com.example.cglproject.models.BusinessProvider;
 import com.example.cglproject.repositories.BusinessProviderRepository;
 import com.example.cglproject.resources.business.RestBusinessController;
 import com.example.cglproject.services.business_provider.BusinessProviderServiceImpl;
+import com.example.cglproject.services.business_provider.IBusinesProviderService;
+import com.example.cglproject.services.parameter.IParameterService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,13 +24,21 @@ import java.util.List;
 @Slf4j
 public class BusinessProviderController {
 
-    @Autowired
     private BusinessProviderRepository eRepo;
+    private IBusinesProviderService businesProviderService;
+    private IParameterService parameterService;
+
+    public BusinessProviderController(BusinessProviderRepository eRepo, IParameterService parameterService, IBusinesProviderService businesProviderService) {
+        this.eRepo = eRepo;
+        this.parameterService = parameterService;
+        this.businesProviderService = businesProviderService;
+    }
 
     @GetMapping({"/all-business-providers"})
     public ModelAndView getAllBusinessProviders(){
         ModelAndView mav = new ModelAndView("apporteur-daffaires");
         mav.addObject("businessProviders", eRepo.findAll());
+        mav.addObject("parameter", parameterService.getApplicationParameters());
         return mav;
     }
 
@@ -59,7 +69,7 @@ public class BusinessProviderController {
 
     @GetMapping("/deleteBusinessProvider")
     public String deleteBusinessProvider(@RequestParam Long businessPId) {
-        eRepo.deleteById(businessPId);
+        this.businesProviderService.delete(businessPId);
         return "redirect:/all-business-providers";
     }
 
