@@ -83,13 +83,13 @@ class BusinessResourceTest {
         MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders
                         .get("/businesses/"))
                 .andDo(print())
-                .andExpect(view().name("errors/error404"))
-                .andExpect(model().attributeDoesNotExist("businesses"))
+                .andExpect(view().name("business/index"))
+                .andExpect(model().attributeExists("businesses"))
+                .andExpect(model().attribute("businesses",List.of()))
                 .andReturn().getResponse();
 
         assertThat(response.getStatus()).isEqualTo(200);
         assertThat(response.getContentType()).isEqualTo("text/html;charset=UTF-8");
-        assertThat(response.getContentAsString()).contains("Error");
     }
 
     @Test

@@ -23,10 +23,6 @@ public class BusinessResource {
     @GetMapping("/")
     public String getBusinesses(Model model){
         List<Business> businesses = this.service.getAllBusinesses();
-        if (businesses.isEmpty()) {
-            model.addAttribute("businesses", null);
-            return "errors/error404";
-        }
         log.info("Get all businesses");
         model.addAttribute("businesses",this.service.getAllBusinesses());
         return "business/index";
