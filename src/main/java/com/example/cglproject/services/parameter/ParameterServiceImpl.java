@@ -27,10 +27,13 @@ public class ParameterServiceImpl implements IParameterService {
             return this.currentParameter;
         }
         List<Parameter> allParameters = this.parameterRepository.findAll();
-        if (allParameters.isEmpty()) {
-            // the database does not have parameters
-            return new Parameter(0L, 5, 5, 50, 1, 3);
-        } else {
+
+        /*if (!allParameters.isEmpty()) {
+            //return new Parameter(0L, 5,5,50,1,3);
+            //return new Parameter();
+        } */
+
+        if(!allParameters.isEmpty()){
             Parameter best = allParameters.get(0);
             for (Parameter param: allParameters) {
                 if (param.getId() > best.getId()) {
@@ -40,6 +43,7 @@ public class ParameterServiceImpl implements IParameterService {
             this.currentParameter = best;
             return this.currentParameter;
         }
+        return null;
     }
 
     @Override

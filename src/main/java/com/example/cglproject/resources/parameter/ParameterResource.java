@@ -30,13 +30,13 @@ public class ParameterResource {
         }
         model.addAttribute("parameters",parameters);
         log.info("model {}",model.getAttribute("parameter"));
-        return "parameter/parametres";
+        return "parameterPages/parameter";
     }
 
     @GetMapping("/create")
     public String form(Model model){
-        model.addAttribute("parameter",new Parameter());
-        return "parameter/parametres";
+        model.addAttribute("parameter",new Parameter(0L, 5,5,50,1,3));
+        return "parameterPages/newParameter";
     }
 
     @PostMapping("/create")
@@ -46,15 +46,14 @@ public class ParameterResource {
         return "redirect:/";
     }
 
-    @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Long id, Model model){
-        Optional<Parameter> parameter = this.service.findById(id);
+    @GetMapping("/edit")
+    public String edit(Model model){
+        Optional<Parameter> parameter = Optional.ofNullable(this.service.getApplicationParameters());
         if(parameter.isEmpty()) {
-            model.addAttribute("parameter", null);
-            //TODO return error page
+            return "redirect:/parametres/create";
         }
         model.addAttribute("parameter",parameter.get());
-        return "parameter/parametres";
+        return "parameterPages/parameter";
     }
 
     @PostMapping("/edit/{id}")

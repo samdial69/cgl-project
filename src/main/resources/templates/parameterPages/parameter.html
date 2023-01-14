@@ -43,7 +43,7 @@
   </div>
   <div class="div-block-3">
     <div class="w-form">
-      <form id="wf-form-ParametresForm" th:action="@{/parametres/create}" th:object="${parameter}" name="wf-form-ParametresForm" data-name="ParametresForm" method="post">
+      <form id="wf-form-ParametresForm" th:action="@{/parametres/edit/{id}(id=${parameter.id})}" th:object="${parameter}" name="wf-form-ParametresForm" data-name="ParametresForm" method="POST">
         <label for="NbNvxParrPoss" class="field-label">Le nombre de niveaux de parrainage possible :</label>
         <input type="text" class="text-field w-input" maxlength="256"  th:field="*{levelOfSponsorship}" name="NbNvxParrPoss" data-name="NbNvxParrPoss" placeholder="" id="NbNvxParrPoss">
 
