@@ -116,12 +116,13 @@ class ParameterServiceImplTest {
         given(repository.findById(any())).willReturn(Optional.of(parameter));
 
         //when
-        service.delete(parameter.getId());
+        boolean isDeleted = service.delete(parameter.getId());
 
         //then
         ArgumentCaptor<Long> captor = ArgumentCaptor.forClass(Long.class);
         verify(repository).deleteById(captor.capture());
 
+        assertTrue(isDeleted);
         assertThat(captor.getValue()).isEqualTo(parameter.getId());
     }
 
