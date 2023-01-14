@@ -132,9 +132,10 @@ class ParameterServiceImplTest {
         //given
         Long id = 2L;
         //when
-        service.delete(id);
+        boolean isDeleted = service.delete(id);
 
         //then
+        assertFalse(isDeleted);
         verify(repository, never()).deleteById(any());
     }
 }
