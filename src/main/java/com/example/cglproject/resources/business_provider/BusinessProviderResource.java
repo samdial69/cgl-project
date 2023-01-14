@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -21,6 +22,7 @@ public class BusinessProviderResource {
     @GetMapping("/")
     public String getAllBusinessProviders(Model model) {
         log.info("Getting all business providers");
+        List<BusinessProvider> businessProviders = service.getAllBusinessProviders();
         model.addAttribute("providers", this.service.getAllBusinessProviders());
         return "business_provider/index";
     }
@@ -28,14 +30,14 @@ public class BusinessProviderResource {
     @GetMapping("/{id}")
     public String getBusinessProviderById(@PathVariable("id") Long id, Model model) {
         Optional<BusinessProvider> provider = this.service.getById(id);
-        if (provider.isPresent()) {
-            log.info("Getting business provider by id: {}", id);
-            model.addAttribute("provider", provider.get());
-            return "business_provider/show";
+        if (provider.isEmpty()) {
+            log.info("Business provider with id: {} not found", id);
+            model.addAttribute("provider", Optional.empty());
+            return "errors/error404";
         }
-        log.info("Business provider with id: {} not found", id);
-        //TODO add error 404 page instead of index
-        return "business_provider/index";
+        log.info("Getting business provider by id: {}", id);
+        model.addAttribute("provider", provider.get());
+        return "business_provider/show";
     }
 
     @GetMapping("/create")
@@ -54,27 +56,33 @@ public class BusinessProviderResource {
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Long id, Model model){
         Optional<BusinessProvider> provider = this.service.getById(id);
-        if (provider.isPresent()) {
-            log.info("Getting business provider by id: {}", id);
-            model.addAttribute("provider", provider.get());
-            return "business_provider/edit";
+        if (provider.isEmpty()) {
+            log.info("Business provider with id: {} not found", id);
+            model.addAttribute("provider", Optional.empty());
+            return "errors/error404";
         }
-        //TODO add error 404 page instead of index
-        log.info("Business provider with id: {} not found", id);
-        return "business_provider/index";
+        log.info("Getting business provider by id: {}", id);
+        model.addAttribute("provider", provider.get());
+        return "business_provider/edit";
     }
 
     @PostMapping("/edit/{id}")
     public String update(@PathVariable("id") Long id, @ModelAttribute("provider") BusinessProvider provider){
         log.info("Business provider: {}",provider);
-        service.update(id, provider);
+        BusinessProvider updatedProvider =  service.update(id, provider);
+        if (updatedProvider == null) {
+            return "errors/error404";
+        }
         return "redirect:/business_providers/";
     }
 
-    @DeleteMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Long id){
         log.info("Deleting business provider with id: {}",id);
-        service.delete(id);
+        boolean isDeleted =  service.delete(id);
+        if (!isDeleted) {
+            return "errors/error404";
+        }
         return "redirect:/business_providers/";
     }
 }
