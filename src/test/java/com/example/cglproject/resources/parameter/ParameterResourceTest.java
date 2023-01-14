@@ -74,8 +74,6 @@ class ParameterResourceTest {
 
     @Test
     void whenGetParameterIsEmpty_thenReturnError404() throws Exception {
-        //given
-        List<Parameter> parameters = List.of();
         //when
         given(service.findAll()).willReturn(List.of());
         //then
