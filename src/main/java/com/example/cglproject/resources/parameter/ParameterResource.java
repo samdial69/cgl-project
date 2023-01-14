@@ -24,10 +24,6 @@ public class ParameterResource {
     @GetMapping("/")
     public String getParameter(Model model){
         List<Parameter> parameters = this.service.findAll();
-        if(parameters.isEmpty()) {
-            model.addAttribute("parameters", null);
-            return "errors/error404";
-        }
         model.addAttribute("parameters",parameters);
         log.info("model {}",model.getAttribute("parameter"));
         return "parameter/index";
