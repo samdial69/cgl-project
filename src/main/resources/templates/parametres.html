@@ -48,7 +48,10 @@
         <input type="text" class="text-field w-input" maxlength="256"  th:field="*{levelOfSponsorship}" name="NbNvxParrPoss" data-name="NbNvxParrPoss" placeholder="" id="NbNvxParrPoss">
 
         <label for="PourcentageComParr" class="field-label-2">Le pourcentage de commission touché par chaque niveau de parrain :</label>
-        <input type="text" class="text-field-2 w-input" maxlength="256" th:field="*{percentageOfCommission}" name="PourcentageComParr" data-name="PourcentageComParr" placeholder="" id="PourcentageComParr">
+        <input type="text" class="text-field-2 w-input" maxlength="256" th:field="*{percentageOfNextCommission}" name="PourcentageComParr" data-name="PourcentageComParr" placeholder="" id="PourcentageComParr">
+
+        <label for="PourcentageComAP" class="field-label-2">Le pourcentage de commission apporteur d'affaire :</label>
+        <input type="text" class="text-field-2 w-input" maxlength="256" th:field="*{percentageOfInitialCommission}" name="PourcentageComAP" data-name="PourcentageComAP" placeholder="" id="PourcentageComAP">
 
         <label for="NbAffAppAff" class="field-label-2">Le nombre d’affaires à apporter pour rester affilié :</label>
         <input type="text" class="text-field-3 w-input" maxlength="256" th:field="*{numberOfBusinessToBeAffiliated}" name="NbAffAppAff" data-name="NbAffAppAff" placeholder="" id="NbAffAppAff">

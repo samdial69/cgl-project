@@ -30,20 +30,20 @@ public class ParameterResource {
         }
         model.addAttribute("parameters",parameters);
         log.info("model {}",model.getAttribute("parameter"));
-        return "parametres";
+        return "parameter/parametres";
     }
 
     @GetMapping("/create")
     public String form(Model model){
         model.addAttribute("parameter",new Parameter());
-        return "parametres";
+        return "parameter/parametres";
     }
 
     @PostMapping("/create")
     public String create(@ModelAttribute("parameter") Parameter parameter){
         log.info("Parameter: {}",parameter);
         service.save(parameter);
-        return "redirect:/parametres";
+        return "redirect:/";
     }
 
     @GetMapping("/edit/{id}")
@@ -54,21 +54,21 @@ public class ParameterResource {
             //TODO return error page
         }
         model.addAttribute("parameter",parameter.get());
-        return "parametres";
+        return "parameter/parametres";
     }
 
     @PostMapping("/edit/{id}")
     public String update(@PathVariable("id") Long id,@ModelAttribute("parameter") Parameter parameter){
         log.info("Parameter updated by id {}: {}",id,parameter);
         service.update(id,parameter);
-        return "redirect:/parametres/";
+        return "redirect:/";
     }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Long id){
         log.info("Parameter delete by id: {}",id);
         service.delete(id);
-        return "redirect:/parametres/";
+        return "redirect:/";
     }
 
 }

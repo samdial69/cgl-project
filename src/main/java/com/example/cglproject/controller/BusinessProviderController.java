@@ -2,23 +2,15 @@ package com.example.cglproject.controller;
 
 import com.example.cglproject.models.BusinessProvider;
 import com.example.cglproject.repositories.BusinessProviderRepository;
-import com.example.cglproject.resources.business.RestBusinessController;
-import com.example.cglproject.services.business_provider.BusinessProviderServiceImpl;
 import com.example.cglproject.services.business_provider.IBusinesProviderService;
 import com.example.cglproject.services.parameter.IParameterService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.swing.plaf.nimbus.State;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @Slf4j

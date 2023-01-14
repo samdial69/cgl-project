@@ -1,17 +1,13 @@
 package com.example.cglproject.resources.business_provider;
 
-import com.example.cglproject.models.Business;
 import com.example.cglproject.models.BusinessProvider;
-import com.example.cglproject.services.business.BusinessServiceImpl;
 import com.example.cglproject.services.business_provider.BusinessProviderServiceImpl;
 import com.example.cglproject.services.parameter.IParameterService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -29,7 +25,8 @@ public class BusinessProviderResource {
     public String getAllBusinessProviders(Model model) {
         log.info("Getting all business providers");
         model.addAttribute("providers", this.service.getAllBusinessProviders());
-        return "business_provider/index";
+        model.addAttribute("parameter", parameterService.getApplicationParameters());
+        return "businessProvidersPages/apporteur-daffaires";
     }
 
     @GetMapping("/{id}")
@@ -38,24 +35,28 @@ public class BusinessProviderResource {
         if (provider.isPresent()) {
             log.info("Getting business provider by id: {}", id);
             model.addAttribute("provider", provider.get());
-            return "business_provider/show";
+            model.addAttribute("businesses", this.service.findByIdBusinessProvider(id));
+            return "businessProvidersPages/apporteur-daffaires-liste-de-tous-les-affaires";
         }
         log.info("Business provider with id: {} not found", id);
         //TODO add error 404 page instead of index
         return "business_provider/index";
     }
 
+
     @GetMapping("/create")
     public String form(Model model){
         model.addAttribute("provider",new BusinessProvider());
-        return "business_provider/add";
+        model.addAttribute("providers",this.service.getAllBusinessProviders() );
+        return "businessProvidersPages/add-business-providers";
     }
+
 
     @PostMapping("/create")
     public String create(@ModelAttribute("provider") BusinessProvider provider){
         log.info("Business provider: {}",provider);
         service.create(provider);
-        return "redirect:/business_providers/";
+        return "redirect:/";
     }
 
     @GetMapping("/edit/{id}")
@@ -64,9 +65,12 @@ public class BusinessProviderResource {
         if (provider.isPresent()) {
             log.info("Getting business provider by id: {}", id);
             model.addAttribute("provider", provider.get());
-            return "business_provider/edit";
+            model.addAttribute("BPsponsor", provider.get().getSponsor());
+
+
+            return "businessProvidersPages/edit-business-providers";
         }
-        //TODO add error 404 page instead of index
+        //TODO return error 404 page instead of index
         log.info("Business provider with id: {} not found", id);
         return "business_provider/index";
     }
@@ -75,41 +79,33 @@ public class BusinessProviderResource {
     public String update(@PathVariable("id") Long id, @ModelAttribute("provider") BusinessProvider provider){
         log.info("Business provider: {}",provider);
         service.update(id, provider);
-        return "redirect:/business_providers/";
+        return "redirect:/";
     }
 
     @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable("id") Long id){
         log.info("Deleting business provider with id: {}",id);
         service.delete(id);
-        return "redirect:/business_providers/";
+        return "redirect:/";
     }
 
-    @GetMapping("/viewBusinessProvider")
-    public ModelAndView ViewBusinessProvider(@RequestParam Long businessPId) {
-        ModelAndView mav = new ModelAndView("apporteur-daffaires-liste-de-tous-les-affaires");
-        Optional<BusinessProvider> businessProvider = this.service.getById(businessPId);
-        mav.addObject("businessProvider", businessProvider.get());
-        mav.addObject("businesses", this.service.findByIdBusinessProvider(businessPId));
-        return mav;
+    @GetMapping("/DirecteBusinesses/{id}")
+    public String getDirectBusinesses(@PathVariable("id") Long id, Model model) {
+        log.info("Showing direct business of the business provider with id: {}", id);
+        Optional<BusinessProvider> provider = this.service.getById(id);
+        model.addAttribute("provider", provider.get());
+        model.addAttribute("businesses", this.service.findByIdBusinessProviderAndAffile(id));
+        return "businessProvidersPages/apporteur-daffaires-liste-des-affaires-directes";
     }
 
-    @GetMapping("/viewBusinessProviderDirecte")
-    public ModelAndView ViewBusinessProviderDirecte(@RequestParam Long businessPId) {
-        ModelAndView mav = new ModelAndView("apporteur-daffaires-liste-des-affaires-directes");
-        Optional<BusinessProvider> businessProvider = this.service.getById(businessPId);
-        mav.addObject("businessProvider", businessProvider.get());
-        mav.addObject("businesses", this.service.findByIdBusinessProviderAndAffile(businessPId));
-        return mav;
+    @GetMapping("/ParrainsOfProvider/{id}")
+    public String getSponsorsOfBusinessProvider(@PathVariable("id") Long id, Model model) {
+        log.info("Showing sponsors of the business provider with id: {}", id);
+        Optional<BusinessProvider> provider = this.service.getById(id);
+        model.addAttribute("provider", provider.get());
+        model.addAttribute("providers", this.service.getProviderAndAllSponsors(id));
+        model.addAttribute("parameter", parameterService.getApplicationParameters());
+        return "businessProvidersPages/apporteur-daffaires-liste-des-parrains";
     }
 
-    @GetMapping("/viewBusinessProviderParrains")
-    public ModelAndView ViewBusinessProviderParrains(@RequestParam Long businessPId) {
-        ModelAndView mav = new ModelAndView("apporteur-daffaires-liste-des-parrains");
-        Optional<BusinessProvider> businessProvider = this.service.getById(businessPId);
-        mav.addObject("businessProvider", businessProvider.get());
-        mav.addObject("businessProviders", this.service.getProviderAndAllSponsors(businessPId));
-        mav.addObject("parameter", parameterService.getApplicationParameters());
-        return mav;
-    }
 }

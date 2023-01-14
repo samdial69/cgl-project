@@ -1,14 +1,13 @@
 package com.example.cglproject.resources.business;
 
 import com.example.cglproject.models.Business;
-import com.example.cglproject.models.BusinessProvider;
-import com.example.cglproject.repositories.BusinessProviderRepository;
 import com.example.cglproject.services.business.BusinessServiceImpl;
+import com.example.cglproject.services.business_provider.IBusinesProviderService;
+import com.example.cglproject.services.comission.ICommissionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Optional;
 
@@ -18,36 +17,47 @@ import java.util.Optional;
 public class BusinessResource {
     private final BusinessServiceImpl service;
 
-    public BusinessResource(BusinessServiceImpl service) {
+    private IBusinesProviderService providerService;
+
+    private ICommissionService commissionService;
+
+    public BusinessResource(BusinessServiceImpl service, IBusinesProviderService providerService, ICommissionService commissionService) {
         this.service = service;
+        this.providerService = providerService;
+        this.commissionService = commissionService;
     }
 
     @GetMapping("/")
     public String getBusinesses(Model model){
         log.info("Get all businesses");
         model.addAttribute("businesses",this.service.getAllBusinesses());
-        return "business/index";
+        return "businessPages/tous-les-affaires";
     }
 
+
+    // voir oour garder ou effacer
     @GetMapping("/{id}")
     public String getBusinessById(@PathVariable("id") Long id, Model model){
         log.info("Get business by id {}",id);
         model.addAttribute("business",this.service.findById(id).get());
-        return "business/show";
+        model.addAttribute("provider", this.service.findById(id).get().getProvider());
+        return "businessPages/edit-business";
     }
 
     @GetMapping("/create")
     public String form(Model model){
         model.addAttribute("business",new Business());
-        return "business/add";
+        model.addAttribute("providers", providerService.getAllBusinessProviders());
+        return "businessPages/add-business";
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute("business") Business business){
-        log.info("Business: {}",business);
-        service.create(business);
+    public String create(@RequestParam String title, @RequestParam long providerId, @RequestParam double initialCommission){
+        log.info("Business: {} {} {}", title, initialCommission, providerId);
+        this.service.create(title, initialCommission, providerId);
         return "redirect:/businesses/";
     }
+
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Long id, Model model){
@@ -56,23 +66,24 @@ public class BusinessResource {
             model.addAttribute("business", null);
         }else {
             model.addAttribute("business", business.get());
+            model.addAttribute("provider", business.get().getProvider());
         }
         log.info("Get business by id {}",id);
-        return "business/edit";
+        return "businessPages/edit-business";
     }
 
     @PostMapping("/edit/{id}")
     public String update(@PathVariable("id") Long id,@ModelAttribute("business") Business business){
         log.info("Business updated by id {}: {}",id,business);
         service.update(id,business);
-        return "redirect:/businesses/";
+        return "redirect:/";
     }
 
     @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable("id") Long id){
         log.info("Delete business by id {}",id);
         service.delete(id);
-        return "redirect:/businesses/";
+        return "redirect:/";
     }
 
 

@@ -29,24 +29,28 @@
   </div>
 </div>
 <div class="div-block">
-  <h1 class="heading-3">Ajouter une affaire</h1>
+  <h1 class="heading-3">Ajouter un apporteur d'affaire</h1>
 </div>
 <div class="div-block-3" >
-  <form th:action="@{/saveBusiness}" method="POST">
+  <form th:action="@{/business_providers/create}" th:object="${provider}" method="POST">
 
-    <input type="text" name="title" class="form-control col-4 mb-4" placeholder="Entrez un titre" required="required"/>
-    <input type="number" name="initialCommission" class="form-control col-4 mb-4" placeholder="Entrez une commission initiale"  required="required"/>
-
-    <select class="form-control col-4 mb-4" name="providerId" required="required">
-      <option value="">Veuillez sélectionner un apporteur</option>
-      <option th:each="provider: ${businessProviders}" th:value="${provider.id}" th:text="${provider.firstname} + ${provider.lastname}"></option>
+    <input type="text" th:field="*{firstname}" class="form-control col-4 mb-4" placeholder="Entrez un prénom" />
+    <input type="text" th:field="*{lastname}" class="form-control col-4 mb-4" placeholder="Entrez un nom" />
+    <br/>
+    <br/>
+    <label>Veuillez choisir un parrain :</label>
+    <select class="form-control col-4 mb-4" th:field="*{sponsor.id}" onChange="onstatechange(this)" th:style="'padding:10px'">
+      <option value="">Sélectionnez un parrain</option>
+      <option th:each="businessProviderP: ${providers}" th:value="${businessProviderP.id}" th:text="${businessProviderP.firstname}+ ' ' + ${businessProviderP.lastname} + ' ' + ${businessProviderP.id}"></option>
     </select>
-
+    <br/>
+    <br/>
     <button type="submit" class="btn btn-primary col-2">Sauvegarder</button>
+    <input type="hidden" th:field="*{id}" />
 
   </form>
   <hr/>
-  <a th:href="@{/all-businesses}">Retour</a>
+  <a th:href="@{/business_providers/}">Retour</a>
 </div>
 
 
