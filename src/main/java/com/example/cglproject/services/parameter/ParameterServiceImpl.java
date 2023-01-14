@@ -19,6 +19,12 @@ public class ParameterServiceImpl implements IParameterService {
 
     public ParameterServiceImpl(ParameterRepository parameterRepository) {
         this.parameterRepository = parameterRepository;
+        List<Parameter> allParameters = this.parameterRepository.findAll();
+
+        if (allParameters.isEmpty()) {
+            this.currentParameter = new Parameter(0L, 5,5,50,1,3);
+            this.parameterRepository.save(currentParameter);
+        }
     }
 
     @Override
@@ -72,6 +78,7 @@ public class ParameterServiceImpl implements IParameterService {
         if(currentParam.isPresent()){
             log.info("Updating parameter by id : {}",id);
             parameter.setId(currentParam.get().getId());
+            this.currentParameter = parameter;
             return this.parameterRepository.save(parameter);
         }
         return null;

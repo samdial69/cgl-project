@@ -35,7 +35,6 @@ public class ParameterResource {
 
     @GetMapping("/create")
     public String form(Model model){
-        model.addAttribute("parameter",new Parameter(0L, 5,5,50,1,3));
         return "parameterPages/newParameter";
     }
 
