@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Data
@@ -19,7 +20,7 @@ public class Business {
     @Column(name = "id", nullable = false)
     private Long id;
     private String title;
-    private LocalDate createdAt = LocalDate.now();
+    private Date createdAt = new Date();
 
     //TODO add the rest of the fields like the provider
 }

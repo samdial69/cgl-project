@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -21,6 +22,11 @@ public class BusinessResource {
 
     @GetMapping("/")
     public String getBusinesses(Model model){
+        List<Business> businesses = this.service.getAllBusinesses();
+        if (businesses.isEmpty()) {
+            model.addAttribute("businesses", null);
+            return "errors/error404";
+        }
         log.info("Get all businesses");
         model.addAttribute("businesses",this.service.getAllBusinesses());
         return "business/index";
@@ -28,6 +34,11 @@ public class BusinessResource {
 
     @GetMapping("/{id}")
     public String getBusinessById(@PathVariable("id") Long id, Model model){
+        Optional<Business> business = this.service.findById(id);
+        if (business.isEmpty()) {
+            model.addAttribute("business", null);
+            return "errors/error404";
+        }
         log.info("Get business by id {}",id);
         model.addAttribute("business",this.service.findById(id).get());
         return "business/show";
@@ -51,9 +62,9 @@ public class BusinessResource {
         Optional<Business> business = this.service.findById(id);
         if (business.isEmpty()) {
             model.addAttribute("business", null);
-        }else {
-            model.addAttribute("business", business.get());
+            return "errors/error404";
         }
+        model.addAttribute("business",business.get());
         log.info("Get business by id {}",id);
         return "business/edit";
     }
@@ -61,14 +72,20 @@ public class BusinessResource {
     @PostMapping("/edit/{id}")
     public String update(@PathVariable("id") Long id,@ModelAttribute("business") Business business){
         log.info("Business updated by id {}: {}",id,business);
-        service.update(id,business);
+        Business updatedBusiness = service.update(id,business);
+        if (updatedBusiness == null) {
+            return "errors/error404";
+        }
         return "redirect:/businesses/";
     }
 
-    @DeleteMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Long id){
         log.info("Delete business by id {}",id);
-        service.delete(id);
+        boolean isDeleted = service.delete(id);
+        if (!isDeleted) {
+            return "errors/error404";
+        }
         return "redirect:/businesses/";
     }
 }
