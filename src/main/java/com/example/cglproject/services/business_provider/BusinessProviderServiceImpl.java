@@ -144,7 +144,7 @@ public class BusinessProviderServiceImpl implements IBusinesProviderService {
         }
     }
 
-    @Override
+    /*@Override
     public List<Business> findByIdBusinessProviderAndAffile(Long IdBusinessProvider) {
         Optional<BusinessProvider> optionalProvider = this.service.findById(IdBusinessProvider);
         if ( ! optionalProvider.isEmpty()) {
@@ -154,6 +154,6 @@ public class BusinessProviderServiceImpl implements IBusinesProviderService {
             }
         }
         return null;
-    }
+    }*/
 
 }
