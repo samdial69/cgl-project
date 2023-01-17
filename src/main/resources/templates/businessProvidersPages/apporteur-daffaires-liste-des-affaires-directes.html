@@ -51,6 +51,7 @@
   </div>
   <div class="div-block-3" id="dataTable">
     <a th:onclick="|location.href='@{/businesses/create}'|" class="btn btn-primary">Ajouter une affaire</a>
+    <a class="btn btn-primary" id="this-month" onclick="insertDate()">Affaires du mois en cours</a>
     <br/><br/>
     <table class="table table-bordered table-striped" id="businessesOfBPD">
 
@@ -63,7 +64,6 @@
         <th>Commission globale</th>
         <th>Commission perçue</th>
         <th>Voir le parrain</th>
-        <th>Voir le filleul</th>
         <th>Actions</th>
       </tr>
       </thead>
@@ -75,6 +75,10 @@
         <td th:text="${business.createdAt}" />
         <td th:text="${business.getGlobalCommission()}"/>
         <td th:text="${business.getCommissionOf(provider)}"/>
+        <td>
+          <a th:if="${provider.sponsor != null}"
+             th:href="@{/business_providers/ParrainsOfProvider/{id}(id=${provider.id})}" class="btn btn-info" id="buttonParrain">Voir Parrain</a>
+        </td>
         <td>
           <a th:href="@{/businesses/{id}(id=${business.id})}" class="btn btn-info">Éditer</a>
 
@@ -105,6 +109,22 @@
         }]
       });
     })
+  </script>
+  <script>
+    function insertDate() {
+      const currentDate = new Date();
+      const month = (currentDate.getMonth() + 1).toString().padStart(2, "0");
+      const year = currentDate.getFullYear();
+      const currentValue = year + "-" + month;
+      const insertBtn = document.getElementById("this-month");
+      if($('#businessesOfBPD').DataTable().search() === currentValue ) {
+        $('#businessesOfBPD').DataTable().search("").draw();
+        insertBtn.innerHTML = "Affaires du mois en cours";
+      }else {
+        $('#businessesOfBPD').DataTable().search( currentValue ).draw();
+        insertBtn.innerHTML = "Voir tous les mois";
+      }
+    }
   </script>
 </body>
 </html>

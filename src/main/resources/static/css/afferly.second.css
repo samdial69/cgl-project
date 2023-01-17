@@ -920,10 +920,6 @@ textarea.w-select {
   object-fit: cover;
   z-index: -100;
 }
-.w-background-video > video::-webkit-media-controls-start-playback-button {
-  display: none !important;
-  -webkit-appearance: none;
-}
 .w-background-video--control {
   position: absolute;
   bottom: 1em;
@@ -1147,20 +1143,6 @@ textarea.w-select {
     padding-left: 10px;
   }
 }
-/**
- * ## Note
- * Safari (on both iOS and OS X) does not handle viewport units (vh, vw) well.
- * For example percentage units do not work on descendants of elements that
- * have any dimensions expressed in viewport units. It also doesn’t handle them at
- * all in `calc()`.
- */
-/**
- * Wrapper around all lightbox elements
- *
- * 1. Since the lightbox can receive focus, IE also gives it an outline.
- * 2. Fixes flickering on Chrome when a transition is in progress
- *    underneath the lightbox.
- */
 .w-lightbox-backdrop {
   color: #000;
   cursor: auto;
@@ -1195,19 +1177,13 @@ textarea.w-select {
   background: rgba(0, 0, 0, 0.9);
   z-index: 2000;
   outline: 0;
-  /* 1 */
   opacity: 0;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   -webkit-tap-highlight-color: transparent;
   -webkit-transform: translate(0, 0);
-  /* 2 */
 }
-/**
- * Neat trick to bind the rubberband effect to our canvas instead of the whole
- * document on iOS. It also prevents a bug that causes the document underneath to scroll.
- */
 .w-lightbox-backdrop,
 .w-lightbox-container {
   height: 100%;
@@ -1229,7 +1205,7 @@ textarea.w-select {
   content: "";
   height: 100vh;
 }
-/* .w-lightbox-content */
+
 .w-lightbox-group,
 .w-lightbox-group .w-lightbox-view,
 .w-lightbox-group .w-lightbox-view:before {
@@ -1240,29 +1216,19 @@ textarea.w-select {
   display: inline-block;
   vertical-align: middle;
 }
-/*
- * 1. Remove default margin set by user-agent on the <figure> element.
- */
 .w-lightbox-figure {
   position: relative;
   margin: 0;
-  /* 1 */
 }
 .w-lightbox-group .w-lightbox-figure {
   cursor: pointer;
 }
-/**
- * IE adds image dimensions as width and height attributes on the IMG tag,
- * but we need both width and height to be set to auto to enable scaling.
- */
 .w-lightbox-img {
   width: auto;
   height: auto;
   max-width: none;
 }
-/**
- * 1. Reset if style is set by user on "All Images"
- */
+
 .w-lightbox-image {
   display: block;
   float: none;
@@ -1319,11 +1285,7 @@ textarea.w-select {
   /* <svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 0 24 40" width="24" height="40"><g transform="rotate(45)"><path d="m0-0h28v28h-5v-23h-23z" opacity=".4"/><path d="m1 1h26v26h-3v-23h-23z" fill="#fff"/></g></svg> */
   background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii00IDAgMjQgNDAiIHdpZHRoPSIyNCIgaGVpZ2h0PSI0MCI+PGcgdHJhbnNmb3JtPSJyb3RhdGUoNDUpIj48cGF0aCBkPSJtMC0waDI4djI4aC01di0yM2gtMjN6IiBvcGFjaXR5PSIuNCIvPjxwYXRoIGQ9Im0xIDFoMjZ2MjZoLTN2LTIzaC0yM3oiIGZpbGw9IiNmZmYiLz48L2c+PC9zdmc+");
 }
-/*
- * Without specifying the with and height inside the SVG, all versions of IE render the icon too small.
- * The bug does not seem to manifest itself if the elements are tall enough such as the above arrows.
- * (http://stackoverflow.com/questions/16092114/background-size-differs-in-internet-explorer)
- */
+
 .w-lightbox-close {
   right: 0;
   height: 2.6em;
@@ -1331,9 +1293,6 @@ textarea.w-select {
   background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii00IDAgMTggMTciIHdpZHRoPSIxOCIgaGVpZ2h0PSIxNyI+PGcgdHJhbnNmb3JtPSJyb3RhdGUoNDUpIj48cGF0aCBkPSJtMCAwaDd2LTdoNXY3aDd2NWgtN3Y3aC01di03aC03eiIgb3BhY2l0eT0iLjQiLz48cGF0aCBkPSJtMSAxaDd2LTdoM3Y3aDd2M2gtN3Y3aC0zdi03aC03eiIgZmlsbD0iI2ZmZiIvPjwvZz48L3N2Zz4=");
   background-size: 18px;
 }
-/**
- * 1. All IE versions add extra space at the bottom without this.
- */
 .w-lightbox-strip {
   position: absolute;
   bottom: 0;
@@ -1848,6 +1807,18 @@ textarea.w-select {
 #dataTable {
   margin-bottom: 150px !important;
   padding-bottom: 150px !important;
+}
+
+#this-month {
+  background-color: /*[(${backgroundColor})]*/ #cbffb9 !important;
+  color: black;
+  border-color: #cbffb9 !important;
+}
+
+#this-month:hover {
+  background-color: /*[(${backgroundColor})]*/ black !important;
+  color: /*[(${Color})]*/ white !important;
+  border-color: black !important;
 }
 
 
