@@ -41,8 +41,7 @@ public class BusinessProviderResource {
             return "businessProvidersPages/apporteur-daffaires-liste-de-tous-les-affaires";
         }
         log.info("Business provider with id: {} not found", id);
-        //TODO add error 404 page instead of index
-        return "business_provider/index";
+        return "/error/error404";
     }
 
 
@@ -70,9 +69,8 @@ public class BusinessProviderResource {
             model.addAttribute("providers", this.service.getAllBusinessProviders());
             return "businessProvidersPages/edit-business-providers";
         }
-        //TODO return error 404 page instead of index
         log.info("Business provider with id: {} not found", id);
-        return "business_provider/index";
+        return "/error/error404";
     }
 
     @PostMapping("/edit/{id}")

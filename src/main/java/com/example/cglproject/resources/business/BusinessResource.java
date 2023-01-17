@@ -64,6 +64,7 @@ public class BusinessResource {
         Optional<Business> business = this.service.findById(id);
         if (business.isEmpty()) {
             model.addAttribute("business", null);
+            return "/error/error404";
         }else {
             model.addAttribute("business", business.get());
             model.addAttribute("provider", business.get().getProvider());
