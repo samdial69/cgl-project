@@ -19,7 +19,7 @@
 
 
 </head>
-<body>
+<body onpageshow="toggleZoomScreen()">
   <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar w-nav">
     <div class="w-container">
       <a th:href="@{/}" class="w-nav-brand">
@@ -67,6 +67,9 @@
         <th>Apporteur</th>
         <th>Commission globale</th>
         <th>Commission de l'apporteur</th>
+        <th>Total comm. du mois</th>
+        <th>Total comm. du mois-1</th>
+        <th>Total comm. du mois-2</th>
         <th>Actions</th>
       </tr>
       </thead>
@@ -78,6 +81,9 @@
         <td th:text="${business.provider.firstname} + ' ' + ${business.provider.lastname}" />
         <td th:text="${business.getGlobalCommission()}"/>
         <td th:text="${business.getProviderCommission()}"/>
+        <td></td>
+        <td></td>
+        <td></td>
         <td>
           <a th:href="@{/businesses/edit/{id}(id=${business.id})}" class="btn btn-info">Éditer</a>
           <a th:href="@{/businesses/delete/{id}(id=${business.id})}" class="btn btn-danger ml-2">Supprimer</a>
@@ -117,6 +123,11 @@
         $('#businessTable').DataTable().search( currentValue ).draw();
         insertBtn.innerHTML = "Voir tous les mois";
       }
+    }
+  </script>
+  <script>
+    function toggleZoomScreen() {
+      document.body.style.zoom = "80%";
     }
   </script>
 </body>
