@@ -34,4 +34,17 @@ public class Business {
         }
         return result;
     }
+
+    public double getProviderCommission() {
+        return this.getCommissionOf(this.provider);
+    }
+
+    public double getCommissionOf(BusinessProvider recipient) {
+        for (Commission commission : this.commissions) {
+            if (commission.getRecipient() == recipient) { // same object
+                return commission.getCommission();
+            }
+        }
+        return 0;
+    }
 }

@@ -38,7 +38,7 @@
       <div class="column w-col w-col-4">
         <div class="div-block-2">
           <div>Nombre d’affaires directes :</div>
-          <div class="infotext1">24</div>
+          <div class="infotext1" th:text="${provider.businesses.size()}"/>
         </div>
       </div>
       <div class="column-4 w-col w-col-4">
@@ -60,8 +60,8 @@
         <th>Situation</th>
         <th>Titre</th>
         <th>Date</th>
-        <th>Commissions associes</th>
-        <th>Commissions de l'apporteur d'affaires</th>
+        <th>Commission globale</th>
+        <th>Commission perçue</th>
         <th>Voir le parrain</th>
         <th>Voir le filleul</th>
         <th>Actions</th>
@@ -73,8 +73,8 @@
         <td th:text="situation" />
         <td th:text="${business.title}" />
         <td th:text="${business.createdAt}" />
-        <td th:text="commission_associees"/>
-        <td th:text="commission_app_affaires"/>
+        <td th:text="${business.getGlobalCommission()}"/>
+        <td th:text="${business.getCommissionOf(provider)}"/>
         <td>
           <a th:href="@{/businesses/{id}(id=${business.id})}" class="btn btn-info">Éditer</a>
 

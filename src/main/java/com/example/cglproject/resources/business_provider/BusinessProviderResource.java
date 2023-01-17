@@ -31,11 +31,13 @@ public class BusinessProviderResource {
 
     @GetMapping("/{id}")
     public String getBusinessProviderById(@PathVariable("id") Long id, Model model) {
-        Optional<BusinessProvider> provider = this.service.getById(id);
-        if (provider.isPresent()) {
+        Optional<BusinessProvider> optional = this.service.getById(id);
+        if (optional.isPresent()) {
+            BusinessProvider provider = optional.get();
             log.info("Getting business provider by id: {}", id);
-            model.addAttribute("provider", provider.get());
-            model.addAttribute("businesses", this.service.findByIdBusinessProvider(id));
+            model.addAttribute("provider", provider);
+            model.addAttribute("commissions", provider.getCommissions());
+            model.addAttribute("parameter", parameterService.getApplicationParameters());
             return "businessProvidersPages/apporteur-daffaires-liste-de-tous-les-affaires";
         }
         log.info("Business provider with id: {} not found", id);
@@ -65,9 +67,7 @@ public class BusinessProviderResource {
         if (provider.isPresent()) {
             log.info("Getting business provider by id: {}", id);
             model.addAttribute("provider", provider.get());
-            model.addAttribute("BPsponsor", provider.get().getSponsor());
-
-
+            model.addAttribute("providers", this.service.getAllBusinessProviders());
             return "businessProvidersPages/edit-business-providers";
         }
         //TODO return error 404 page instead of index
@@ -82,7 +82,7 @@ public class BusinessProviderResource {
         return "redirect:/";
     }
 
-    @DeleteMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Long id){
         log.info("Deleting business provider with id: {}",id);
         service.delete(id);

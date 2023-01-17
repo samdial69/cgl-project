@@ -38,17 +38,20 @@
       <div class="column w-col w-col-4">
         <div class="div-block-2">
           <div>Nombre d’affaires directes :</div>
-          <div class="infotext1">24</div>
+          <div class="infotext1" th:text="${provider.businesses.size()}"/>
         </div>
       </div>
       <div class="column-2 w-col w-col-4">
         <div class="div-block-4">
           <div>Nombre de tous les affaires : </div>
-          <div class="infotextres2">54</div>
+          <div class="infotextres2" th:text="${provider.commissions.size()}"/>
         </div>
       </div>
       <div class="column-3 w-col w-col-4">
-        <div class="div-block-6"></div>
+        <div class="div-block-6" th:if="${parameter.numberOfMonthsAffiliation > 0}">
+          <div th:text="'Somme des commissions des ' + ${parameter.numberOfMonthsAffiliation} + ' mois'"/>
+          <div th:text="${provider.getLastCommissionsSum(parameter.numberOfMonthsAffiliation)}"/>
+        </div>
       </div>
     </div>
   </div>
@@ -60,31 +63,31 @@
       <thead>
       <tr>
         <th>Id</th>
-        <th>Situation</th>
         <th>Titre</th>
         <th>Date</th>
-        <th>Commissions globale</th>
-        <th>Commissions de l'apporteur d'affaires</th>
+        <th>Apporteur</th>
+        <th>Commission globale</th>
+        <th>Commission perçue</th>
         <th>Voir le parrain</th>
         <th>Actions</th>
       </tr>
       </thead>
       <tbody>
-      <tr th:each="business: ${businesses}">
-        <td th:text="${business.id}" />
-        <td th:text="situation" />
-        <td th:text="${business.title}" />
-        <td th:text="${business.createdAt}" />
-        <td th:text="${business.getGlobalCommission()}"/>
-        <td th:text="commission_app_affaires"/>
+      <tr th:each="commission: ${commissions}">
+        <td th:text="${commission.business.id}" />
+        <td th:text="${commission.business.title}" />
+        <td th:text="${commission.business.createdAt}" />
+        <td th:text="${commission.business.provider.firstname} + ' ' + ${commission.business.provider.lastname}"/>
+        <td th:text="${commission.business.getGlobalCommission()}"/>
+        <td th:text="${commission.commission}"/>
         <td>
           <a th:if="${provider.sponsor != null}"
-             th:href="@{/business-providers/ParrainsOfProvider/{id}(id=${provider.id})}" class="btn btn-info" id="buttonParrain">Voir Parrain</a>
+             th:href="@{/business_providers/ParrainsOfProvider/{id}(id=${provider.id})}" class="btn btn-info" id="buttonParrain">Voir Parrain</a>
         </td>
         <td>
-          <a th:href="@{/businesses/{id}(id=${business.id})}" class="btn btn-info">Éditer</a>
+          <a th:href="@{/businesses/{id}(id=${commission.business.id})}" class="btn btn-info">Éditer</a>
 
-          <a th:href="@{/businesses/delete/{id}(id=${business.id})}" class="btn btn-danger ml-2">Supprimer</a>
+          <a th:href="@{/businesses/delete/{id}(id=${commission.business.id})}" class="btn btn-danger ml-2">Supprimer</a>
         </td>
       </tr>
       </tbody>

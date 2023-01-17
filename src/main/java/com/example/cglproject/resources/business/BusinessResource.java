@@ -79,7 +79,7 @@ public class BusinessResource {
         return "redirect:/";
     }
 
-    @DeleteMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Long id){
         log.info("Delete business by id {}",id);
         service.delete(id);
