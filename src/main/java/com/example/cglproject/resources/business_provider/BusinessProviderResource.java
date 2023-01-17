@@ -92,7 +92,7 @@ public class BusinessProviderResource {
         log.info("Showing direct business of the business provider with id: {}", id);
         Optional<BusinessProvider> provider = this.service.getById(id);
         model.addAttribute("provider", provider.get());
-        model.addAttribute("businesses", this.service.findByIdBusinessProviderAndAffile(id));
+        model.addAttribute("businesses", this.service.findByIdBusinessProvider(id));
         return "businessProvidersPages/apporteur-daffaires-liste-des-affaires-directes";
     }
 

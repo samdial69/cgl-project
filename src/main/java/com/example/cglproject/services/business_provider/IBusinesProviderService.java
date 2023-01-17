@@ -24,5 +24,5 @@ public interface IBusinesProviderService {
 
     List<Business> findByIdBusinessProvider(Long IdBusinessProvider);
 
-    List<Business> findByIdBusinessProviderAndAffile(Long IdBusinessProvider);
+    //List<Business> findByIdBusinessProviderAndAffile(Long IdBusinessProvider);
 }
