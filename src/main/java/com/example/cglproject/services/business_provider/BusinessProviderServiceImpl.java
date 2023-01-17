@@ -58,9 +58,7 @@ public class BusinessProviderServiceImpl implements IBusinesProviderService {
         List<BusinessProvider> result = new ArrayList<BusinessProvider>();
         Optional<BusinessProvider> optional = this.getById(id);
         if (optional.isPresent()) {
-            BusinessProvider provider = optional.get();
-            result.add(provider);
-            provider = provider.getSponsor();
+            BusinessProvider provider = optional.get().getSponsor();
             while (provider != null) {
                 result.add(provider);
                 provider = provider.getSponsor();
@@ -72,6 +70,9 @@ public class BusinessProviderServiceImpl implements IBusinesProviderService {
     @Override
     public BusinessProvider create(BusinessProvider businessProvider) {
         log.info("Creating business provider: {}", businessProvider);
+        if (businessProvider.getSponsor().getId() == null) {
+            businessProvider.setSponsorNull();
+        }
         return this.service.save(businessProvider);
     }
 
@@ -81,6 +82,9 @@ public class BusinessProviderServiceImpl implements IBusinesProviderService {
         if (currentBusinessProvider.isPresent()) {
             log.info("Updating business provider: {}", businessProvider);
             businessProvider.setId(currentBusinessProvider.get().getId());
+            if (businessProvider.getSponsor().getId() == null) {
+                businessProvider.setSponsorNull();
+            }
             return this.service.save(businessProvider);
         }
         return null;

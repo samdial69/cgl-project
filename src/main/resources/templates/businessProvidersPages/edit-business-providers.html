@@ -37,11 +37,13 @@
     <input type="text" th:field="*{firstname}" class="form-control col-4 mb-4" placeholder="Entrez un prénom" />
     <input type="text" th:field="*{lastname}" class="form-control col-4 mb-4" placeholder="Entrez un nom" />
     <br/>
-    <br/>
     <label>Veuillez choisir un parrain :</label>
     <select class="form-control col-4 mb-4" th:field="*{sponsor.id}" onChange="onstatechange(this)" th:style="'padding:10px'">
       <option value="">Sélectionnez un parrain</option>
-      <option th:if="${BPsponsor != null}" selected="selected" th:value="${BPsponsor.id}" th:text="${BPsponsor.firstname}+ ' ' + ${BPsponsor.lastname} + ' ' + ${BPsponsor.id}"></option>
+      <option th:each="businessProviderP: ${providers}"
+              th:if="${businessProviderP.id != id}"
+              th:value="${businessProviderP.id}"
+              th:text="${businessProviderP.firstname}+ ' ' + ${businessProviderP.lastname} + ' ' + ${businessProviderP.id}"></option>
     </select>
     <br/>
     <br/>

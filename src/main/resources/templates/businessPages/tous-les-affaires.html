@@ -65,6 +65,7 @@
         <th>Date de création</th>
         <th>Apporteur</th>
         <th>Commission globale</th>
+        <th>Commission de l'apporteur</th>
         <th>Actions</th>
       </tr>
       </thead>
@@ -75,6 +76,7 @@
         <td th:text="${business.createdAt}" />
         <td th:text="${business.provider.firstname} + ' ' + ${business.provider.lastname}" />
         <td th:text="${business.getGlobalCommission()}"/>
+        <td th:text="${business.getProviderCommission()}"/>
         <td>
           <a th:href="@{/businesses/edit/{id}(id=${business.id})}" class="btn btn-info">Éditer</a>
           <a th:href="@{/businesses/delete/{id}(id=${business.id})}" class="btn btn-danger ml-2">Supprimer</a>

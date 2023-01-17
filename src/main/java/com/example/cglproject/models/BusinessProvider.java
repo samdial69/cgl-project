@@ -40,7 +40,7 @@ public class BusinessProvider {
     public boolean isAffiliated(Parameter parameter) {
         int businessesToValidate = parameter.getNumberOfBusinessToBeAffiliated();
         int validBusinesses = 0;
-        if (businessesToValidate >= 0) {
+        if (businessesToValidate <= 0) {
             return true;
         }
         List<Business> businesses = this.getBusinesses();
@@ -64,5 +64,20 @@ public class BusinessProvider {
 
     public void setSponsorNull() {
         this.sponsor = null;
+    }
+
+    public double getLastCommissionsSum(int months) {
+        double sum = 0;
+        if (months <= 0 ) {
+            return sum;
+        }
+        LocalDate limit = LocalDate.now().minusMonths(months);
+        for (Commission commission : this.commissions) {
+            if (commission.getBusiness().getCreatedAt().isBefore(limit)) {
+                break;
+            }
+            sum += commission.getCommission();
+        }
+        return sum;
     }
 }
