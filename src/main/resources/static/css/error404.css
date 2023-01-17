@@ -1,0 +1,79 @@
+.utility-page-wrap {
+    display: -webkit-box !important;
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    max-height: 100% !important;
+    max-width: 100% !important;
+    -webkit-box-pack: center !important;
+    -webkit-justify-content: center !important;
+    -ms-flex-pack: center !important;
+    justify-content: center !important;
+    -webkit-box-align: center !important;
+    -webkit-align-items: center !important;
+    -ms-flex-align: center !important;
+    align-items: center !important;
+}
+
+.utility-page-content {
+    display: -webkit-box !important;
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    width: 260px !important;
+    -webkit-box-orient: vertical !important;
+    -webkit-box-direction: normal !important;
+    -webkit-flex-direction: column !important;
+    -ms-flex-direction: column !important;
+    flex-direction: column !important;
+    text-align: center !important;
+}
+
+.body {
+    display: -webkit-box !important;
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -webkit-box-pack: center !important;
+    -webkit-justify-content: center !important;
+    -ms-flex-pack: center !important;
+    justify-content: center !important;
+    -webkit-box-align: center !important;
+    -webkit-align-items: center !important;
+    -ms-flex-align: center !important;
+    align-items: center !important;
+    background-color: #000 !important;
+}
+
+.heading-7 {
+    margin-top: 33px !important;
+    color: #ccfeba !important;
+}
+
+.heading-8 {
+    color: #fff !important;
+    text-align: center !important;
+}
+
+.div-block-21 {
+    margin-top: 150px !important;
+    text-align: center !important;
+}
+
+.text-block-10 {
+    margin-top: 40px !important;
+    margin-bottom: 40px !important;
+    color: #fff !important;
+}
+
+.button {
+    padding: 9px 20px !important;
+    text-decoration: none;
+    border-radius: 30px !important;
+    background-color: #ccfeba !important;
+    color: #000 !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+}

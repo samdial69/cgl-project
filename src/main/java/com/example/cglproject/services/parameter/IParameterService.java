@@ -10,7 +10,7 @@ public interface IParameterService {
 
     Optional<Parameter> findById(Long id);
     List<Parameter> findAll();
-
+    Parameter getApplicationParameters();
     Parameter save(Parameter parameter);
     Parameter update(Long id , Parameter parameter);
     boolean delete(Long id);

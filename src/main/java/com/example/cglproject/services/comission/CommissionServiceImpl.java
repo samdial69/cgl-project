@@ -69,4 +69,17 @@ public class CommissionServiceImpl implements ICommissionService {
         return false;
     }
 
+    @Override
+    public boolean delete(Commission commission) {
+        log.info("deleting");
+        this.repository.delete(commission);
+        return true;
+    }
+    @Override
+    public boolean delete(List<Commission> commissions) {
+        for (Commission commission : commissions) {
+            this.delete(commission);
+        }
+        return true;
+    }
 }

@@ -5,12 +5,16 @@
 
 .navbar {
   background-color: /*[(${backgroundColor})]*/ #cbffb9;
-  text-align: center;
+  text-align: center !important;
 }
 
 .nav {
   background-color: /*[(${backgroundColor})]*/ #cbffb9 !important;
-  text-align: center;
+  text-align: center !important;
+}
+
+.a {
+  text-decoration: none !important;
 }
 
 .link-block {
@@ -73,7 +77,7 @@
 }
 
 .div-block-3 {
-  margin: 40px 20px 20px;
+  margin: 40px 20px 60px;
   padding: 0px;
 }
 
@@ -327,4 +331,7 @@
     margin-right: 10px;
     margin-left: 10px;
   }
+
+
+
 }
