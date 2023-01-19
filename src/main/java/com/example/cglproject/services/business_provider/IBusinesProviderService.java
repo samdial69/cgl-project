@@ -1,5 +1,6 @@
 package com.example.cglproject.services.business_provider;
 
+import com.example.cglproject.models.Business;
 import com.example.cglproject.models.BusinessProvider;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,8 +15,14 @@ public interface IBusinesProviderService {
     List<BusinessProvider> getAllBusinessProviders();
 
     Optional<BusinessProvider> getById(Long id);
+    List<BusinessProvider> getProviderAndAllSponsors(Long id);
     BusinessProvider create(BusinessProvider businessProvider);
     BusinessProvider update(Long id, BusinessProvider businessProvider);
 
     boolean delete(Long id);
+    boolean delete(BusinessProvider businessProvider);
+
+    List<Business> findByIdBusinessProvider(Long IdBusinessProvider);
+
+    //List<Business> findByIdBusinessProviderAndAffile(Long IdBusinessProvider);
 }

@@ -12,14 +12,14 @@
             <tr>
                 <td>First name</td>
                 <td>Last name</td>
-                <td>isSponsored</td>
+                <td>Is Affiliated</td>
             </tr>
         </thead>
         <tbody>
             <tr th:each="provider : ${providers}">
                 <td th:utext="${provider.firstname}"></td>
                 <td th:utext="${provider.lastname}"></td>
-                <td th:utext="${provider.isSponsored()}"></td>
+                <td th:utext="${provider.isAffiliated()}"></td>
                 <td>
                     <a th:href="@{/business_providers/edit/{id}(id=${provider.id})}">Edit</a>
                 </td>

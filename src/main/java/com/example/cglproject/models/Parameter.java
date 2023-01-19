@@ -15,7 +15,8 @@ public class Parameter {
     private Long id;
 
     private int levelOfSponsorship;
-    private double percentageOfCommission;
+    private double percentageOfInitialCommission;
+    private double percentageOfNextCommission;
     private int numberOfBusinessToBeAffiliated;
     private int numberOfMonthsAffiliation;
 

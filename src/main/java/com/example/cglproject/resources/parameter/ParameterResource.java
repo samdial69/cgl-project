@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/parameters")
+@RequestMapping("/parametres")
 @Slf4j
 public class ParameterResource {
     private final ParameterServiceImpl service;
@@ -26,41 +26,44 @@ public class ParameterResource {
         List<Parameter> parameters = this.service.findAll();
         model.addAttribute("parameters",parameters);
         log.info("model {}",model.getAttribute("parameter"));
-        return "parameter/index";
+        return "parameterPages/parameter";
     }
 
     @GetMapping("/create")
     public String form(Model model){
-        model.addAttribute("parameter",new Parameter());
-        return "parameter/add";
+        return "parameterPages/newParameter";
     }
 
     @PostMapping("/create")
     public String create(@ModelAttribute("parameter") Parameter parameter){
         log.info("Parameter: {}",parameter);
         service.save(parameter);
-        return "redirect:/parameters/";
+        return "redirect:/";
     }
 
-    @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Long id, Model model){
-        Optional<Parameter> parameter = this.service.findById(id);
+    @GetMapping("/edit")
+    public String edit(Model model){
+        Optional<Parameter> parameter = Optional.ofNullable(this.service.getApplicationParameters());
         if(parameter.isEmpty()) {
             model.addAttribute("parameter", null);
-            return "errors/error404";
+            //return "errors/error404";
+            return "redirect:/parametres/create";
         }
         model.addAttribute("parameter",parameter.get());
-        return "parameter/edit";
+        return "parameterPages/parameter";
     }
 
     @PostMapping("/edit/{id}")
     public String update(@PathVariable("id") Long id,@ModelAttribute("parameter") Parameter parameter){
         log.info("Parameter updated by id {}: {}",id,parameter);
+
         Parameter param = service.update(id,parameter);
         if (param == null) {
             return "errors/error404";
         }
-        return "redirect:/parameters/";
+        //return "redirect:/parameters/";
+        return "redirect:/";
+
     }
 
     @GetMapping("/delete/{id}")
@@ -70,7 +73,8 @@ public class ParameterResource {
         if (!isDeleted) {
             return "errors/error404";
         }
-        return "redirect:/parameters/";
+        //return "redirect:/parameters/";
+        return "redirect:/";
     }
 
 }

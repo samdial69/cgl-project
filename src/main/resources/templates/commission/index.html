@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Commission</title>
+</head>
+<body>
+  <h1>Commission</h1>
+  <button th:onclick="|location.href='@{/commissions/create}'|">Ajouter</button>
+  <table>
+    <thead>
+    <tr>
+      <td>Commission associé</td>
+      <td>Commission apporteur d'affaires</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="commission : ${commissions}">
+      <td th:utext="${commission.businessCommission}"></td>
+      <td th:utext="${commission.businessProviderCommission}"></td>
+      <td>
+        <a th:href="@{/commissions/edit/{id}(id=${commission.id})}">Edit</a>
+      </td>
+      <td>
+        <a th:href="@{/commissions/delete/{id}(id=${commission.id})}">Delete</a>
+      </td>
+      <td>
+        <a th:href="@{/commissions/{id}(id=${commission.id})}">Show</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</body>
+</html>

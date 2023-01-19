@@ -15,11 +15,16 @@ import javax.persistence.*;
 public class Commission {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
     private Long id;
-    private double businessCommission;
-    private double businessProviderCommission;
 
-    //TODO add the rest of the fields like the business
+    private double commission;
 
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name= "business_id")
+    private Business business;
 
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name= "recipient")
+    private BusinessProvider recipient;
 }
