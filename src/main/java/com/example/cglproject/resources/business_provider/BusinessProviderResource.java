@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -24,6 +25,7 @@ public class BusinessProviderResource {
     @GetMapping("/")
     public String getAllBusinessProviders(Model model) {
         log.info("Getting all business providers");
+        List<BusinessProvider> businessProviders = service.getAllBusinessProviders();
         model.addAttribute("providers", this.service.getAllBusinessProviders());
         model.addAttribute("parameter", parameterService.getApplicationParameters());
         return "businessProvidersPages/apporteur-daffaires";
@@ -41,6 +43,7 @@ public class BusinessProviderResource {
             return "businessProvidersPages/apporteur-daffaires-liste-de-tous-les-affaires";
         }
         log.info("Business provider with id: {} not found", id);
+        model.addAttribute("provider", Optional.empty());
         return "/error/error404";
     }
 
@@ -70,20 +73,30 @@ public class BusinessProviderResource {
             return "businessProvidersPages/edit-business-providers";
         }
         log.info("Business provider with id: {} not found", id);
+         model.addAttribute("provider", Optional.empty());
         return "/error/error404";
     }
 
     @PostMapping("/edit/{id}")
     public String update(@PathVariable("id") Long id, @ModelAttribute("provider") BusinessProvider provider){
         log.info("Business provider: {}",provider);
-        service.update(id, provider);
+        BusinessProvider updatedProvider =  service.update(id, provider);
+        if (updatedProvider == null) {
+            return "errors/error404";
+        }
+        //return "redirect:/business_providers/";
+     
         return "redirect:/";
     }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Long id){
         log.info("Deleting business provider with id: {}",id);
-        service.delete(id);
+        boolean isDeleted =  service.delete(id);
+        if (!isDeleted) {
+            return "errors/error404";
+        }
+        //return "redirect:/business_providers/";
         return "redirect:/";
     }
 

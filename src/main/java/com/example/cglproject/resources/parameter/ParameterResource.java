@@ -24,10 +24,6 @@ public class ParameterResource {
     @GetMapping("/")
     public String getParameter(Model model){
         List<Parameter> parameters = this.service.findAll();
-        if(parameters.isEmpty()) {
-            model.addAttribute("parameters", null);
-            //TODO return error page
-        }
         model.addAttribute("parameters",parameters);
         log.info("model {}",model.getAttribute("parameter"));
         return "parameterPages/parameter";
@@ -49,6 +45,8 @@ public class ParameterResource {
     public String edit(Model model){
         Optional<Parameter> parameter = Optional.ofNullable(this.service.getApplicationParameters());
         if(parameter.isEmpty()) {
+            model.addAttribute("parameter", null);
+            //return "errors/error404";
             return "redirect:/parametres/create";
         }
         model.addAttribute("parameter",parameter.get());
@@ -58,14 +56,24 @@ public class ParameterResource {
     @PostMapping("/edit/{id}")
     public String update(@PathVariable("id") Long id,@ModelAttribute("parameter") Parameter parameter){
         log.info("Parameter updated by id {}: {}",id,parameter);
-        service.update(id,parameter);
+
+        Parameter param = service.update(id,parameter);
+        if (param == null) {
+            return "errors/error404";
+        }
+        //return "redirect:/parameters/";
         return "redirect:/";
+
     }
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Long id){
         log.info("Parameter delete by id: {}",id);
-        service.delete(id);
+        boolean isDeleted = service.delete(id);
+        if (!isDeleted) {
+            return "errors/error404";
+        }
+        //return "redirect:/parameters/";
         return "redirect:/";
     }
 
