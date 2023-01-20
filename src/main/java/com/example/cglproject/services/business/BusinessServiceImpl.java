@@ -136,10 +136,15 @@ public class BusinessServiceImpl implements IBusinessService {
 
     @Override
     public boolean delete(Business business) {
-        List<Commission> commissions = business.getCommissions();
-        this.commissionService.delete(commissions);
-        this.repository.delete(business);
-        return true;
+        Optional<Business> currentBusiness = this.findById(business.getId());
+        if(currentBusiness.isPresent()){
+            log.info("Deleting business by id : {}",business.getId());
+            List<Commission> commissions = business.getCommissions();
+            this.commissionService.delete(commissions);
+            this.repository.delete(business);
+            return true;
+        }
+        return false;
     }
 
     @Override
