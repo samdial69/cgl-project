@@ -38,18 +38,9 @@
     <div class="columns w-row">
       <div class="column w-col w-col-4">
         <div class="div-block-2">
-          <div>Nombre d’affaires directes :</div>
-          <div class="infotext1">20</div>
+          <div>Nombre d’affaires :</div>
+          <div class="infotext1" th:text="${businesses.size()}"/>
         </div>
-      </div>
-      <div class="column-6 w-col w-col-4">
-        <div class="div-block-7">
-          <div>Nombre total d&#x27;affaires :</div>
-          <div class="infotextres2">54</div>
-        </div>
-      </div>
-      <div class="column-7 w-col w-col-4">
-        <div class="div-block-8"></div>
       </div>
     </div>
   </div>
@@ -67,9 +58,6 @@
         <th>Apporteur</th>
         <th>Commission globale</th>
         <th>Commission de l'apporteur</th>
-        <th>Total comm. du mois</th>
-        <th>Total comm. du mois-1</th>
-        <th>Total comm. du mois-2</th>
         <th>Actions</th>
       </tr>
       </thead>
@@ -81,9 +69,6 @@
         <td th:text="${business.provider.firstname} + ' ' + ${business.provider.lastname}" />
         <td th:text="${business.getGlobalCommission()}"/>
         <td th:text="${business.getProviderCommission()}"/>
-        <td></td>
-        <td></td>
-        <td></td>
         <td>
           <a th:href="@{/businesses/edit/{id}(id=${business.id})}" class="btn btn-info">Éditer</a>
           <a th:href="@{/businesses/delete/{id}(id=${business.id})}" class="btn btn-danger ml-2">Supprimer</a>

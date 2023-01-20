@@ -37,7 +37,7 @@
       <div class="column w-col w-col-4">
         <div class="div-block-2">
           <div>Nombre d’apporteur d’affaires :</div>
-          <div class="infotext1">54</div>
+          <div class="infotext1" th:text="${providers.size()}"/>
         </div>
       </div>
       <div class="column-6 w-col w-col-4">
@@ -59,6 +59,9 @@
         <th>Prénom</th>
         <th>Nom</th>
         <th>Affilié ?</th>
+        <th>Total comm. du mois</th>
+        <th>Total comm. du mois-1</th>
+        <th>Total comm. du mois-2</th>
         <th>IdParrain</th>
         <th>Actions</th>
       </tr>
@@ -71,6 +74,9 @@
         <td>
           <span th:if="${provider.isAffiliated(parameter)}" th:text="oui"></span>
         </td>
+        <td th:text="${provider.getPastMonthCommissionsSum(0)}"></td>
+        <td th:text="${provider.getPastMonthCommissionsSum(1)}"></td>
+        <td th:text="${provider.getPastMonthCommissionsSum(2)}"></td>
         <td>
           <span th:if="${provider.sponsor != null}" th:text="${provider.sponsor.firstname} + ' ' + ${provider.sponsor.lastname}"></span>
         </td>

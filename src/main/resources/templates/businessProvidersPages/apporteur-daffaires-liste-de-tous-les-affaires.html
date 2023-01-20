@@ -49,8 +49,8 @@
       </div>
       <div class="column-3 w-col w-col-4">
         <div class="div-block-6" th:if="${parameter.numberOfMonthsAffiliation > 0}">
-          <div th:text="'Somme des commissions des ' + ${parameter.numberOfMonthsAffiliation} + ' mois'"/>
-          <div th:text="${provider.getLastCommissionsSum(parameter.numberOfMonthsAffiliation)}"/>
+          <div th:text="'Somme des commissions perçues des ' + ${parameter.numberOfMonthsAffiliation} + ' derniers mois:'"/>
+          <div class="infotextres2" th:text="${provider.getLastCommissionsSum(parameter.numberOfMonthsAffiliation)}"/>
         </div>
       </div>
     </div>

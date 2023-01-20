@@ -80,4 +80,26 @@ public class BusinessProvider {
         }
         return sum;
     }
+
+    /**
+     *
+     * @param month : 0 is the current month, 1 is the previous month, etc
+     * @return The sum of the commissions (direct and indirect) received during that month
+     */
+    public double getPastMonthCommissionsSum(int month) {
+        double sum = 0;
+        if (month < 0 ) {
+            return sum;
+        }
+        LocalDate mostOldLimit = LocalDate.now().withDayOfMonth(1).minusMonths(month);
+        LocalDate mostRecentLimit = mostOldLimit.withDayOfMonth(mostOldLimit.lengthOfMonth());
+        for (Commission commission : this.commissions) {
+            if (commission.getBusiness().getCreatedAt().isBefore(mostOldLimit)) {
+                break;
+            } else if (commission.getBusiness().getCreatedAt().isBefore(mostRecentLimit)) {
+                sum += commission.getCommission();
+            } // if it is after mostRecentLimit, it should continue to get to the corresponding date
+        }
+        return sum;
+    }
 }
