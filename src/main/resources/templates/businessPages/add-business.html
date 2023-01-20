@@ -34,9 +34,13 @@
 <div class="div-block-3" >
   <form th:action="@{/businesses/create}" th:object="${business}" method="POST">
 
+    <label class="field-label">Tire de l'affaire :</label>
     <input type="text" name="title"  class="form-control col-4 mb-4" placeholder="Entrez un titre" required="required"/>
+
+    <label class="field-label">Commission initiale :</label>
     <input type="number" name="initialCommission" th:value="businessCommssion" class="form-control col-4 mb-4" placeholder="Entrez une commission initiale"  required="required"/>
 
+    <label class="field-label">Choix de l'apporteur d'affaire :</label>
     <select class="form-control col-4 mb-4" name="providerId"  onChange="onstatechange(this)" required="required">
       <option value="">Veuillez sélectionner un apporteur</option>
       <option th:each="BusinessP: ${providers}" th:value="${BusinessP.id}" th:text="${BusinessP.firstname} + ${BusinessP.lastname}"></option>
