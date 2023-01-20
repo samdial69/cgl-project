@@ -2,6 +2,9 @@ package com.example.cglproject.services.business_provider;
 
 import com.example.cglproject.models.BusinessProvider;
 import com.example.cglproject.repositories.BusinessProviderRepository;
+import com.example.cglproject.services.business.IBusinessService;
+import com.example.cglproject.services.comission.ICommissionService;
+import com.example.cglproject.services.parameter.IParameterService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,14 +31,22 @@ class BusinessProviderServiceImplTest {
     @Mock
     private BusinessProviderRepository repository;
 
+    @Mock
+    private IBusinessService businessService;
+
+    @Mock
+    private ICommissionService commissionService;
+
+    @Mock
+    private IParameterService parameterService;
+
     @BeforeEach
     void setUp() {
-        service = new BusinessProviderServiceImpl(repository);
+        service = new BusinessProviderServiceImpl(repository, businessService, commissionService, parameterService);
         this.businessProvider = BusinessProvider.builder()
                 .id(1L)
                 .firstname("John")
                 .lastname("Doe")
-                .isSponsored(false)
                 .build();
     }
 
@@ -81,7 +92,6 @@ class BusinessProviderServiceImplTest {
         BusinessProvider businessProviderToUpdate = BusinessProvider.builder()
                 .firstname("Jane")
                 .lastname("Doe")
-                .isSponsored(false)
                 .build();
         given(repository.findById(businessProvider.getId())).willReturn(Optional.of(businessProvider));
 

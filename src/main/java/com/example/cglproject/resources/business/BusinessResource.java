@@ -32,7 +32,7 @@ public class BusinessResource {
     public String getBusinesses(Model model){
         List<Business> businesses = this.service.getAllBusinesses();
         log.info("Get all businesses");
-        model.addAttribute("businesses",this.service.getAllBusinesses());
+        model.addAttribute("businesses",businesses);
         return "businessPages/tous-les-affaires";
     }
 
@@ -43,11 +43,12 @@ public class BusinessResource {
         Optional<Business> business = this.service.findById(id);
         if (business.isEmpty()) {
             model.addAttribute("business", null);
-            return "errors/error404";
+            return "error/error404";
         }
         log.info("Get business by id {}",id);
-        model.addAttribute("business",this.service.findById(id).get());
-        model.addAttribute("provider", this.service.findById(id).get().getProvider());
+        model.addAttribute("business",business.get());
+        model.addAttribute("provider", business.get().getProvider());
+        model.addAttribute("commissions", business.get().getCommissions());
         return "businessPages/edit-business";
     }
 
@@ -70,8 +71,8 @@ public class BusinessResource {
     public String edit(@PathVariable("id") Long id, Model model){
         Optional<Business> business = this.service.findById(id);
         if (business.isEmpty()) {
-            model.addAttribute("business", null);
-            return "/error/error404";
+            model.addAttribute("business", Optional.empty());
+            return "error/error404";
         }
         model.addAttribute("business",business.get());
         model.addAttribute("provider", business.get().getProvider());
@@ -84,10 +85,10 @@ public class BusinessResource {
         log.info("Business updated by id {}: {}",id,business);
         Business updatedBusiness = service.update(id,business);
         if (updatedBusiness == null) {
-            return "errors/error404";
+            return "error/error404";
         }
 
-        return "redirect:/";
+        return "redirect:/businesses/";
     }
 
     @GetMapping("/delete/{id}")
@@ -95,7 +96,7 @@ public class BusinessResource {
         log.info("Delete business by id {}",id);
         boolean isDeleted = service.delete(id);
         if (!isDeleted) {
-            return "errors/error404";
+            return "error/error404";
         }
         return "redirect:/businesses/";
     }

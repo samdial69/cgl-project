@@ -30,8 +30,13 @@ public class CommissionRessource {
     @GetMapping("/{id}")
     public String getCommissionById(@PathVariable("id") Long id, Model model){
         log.info("Get Commission by id {}", id);
-        model.addAttribute("commission",this.service.findById(id).get());
-        return "commission/show";
+        Optional<Commission> commission = this.service.findById(id);
+        if(commission.isPresent()){
+            model.addAttribute("commission", commission.get());
+            return "commission/show";
+        }
+        model.addAttribute("commission",Optional.empty());
+        return "error/error404";
     }
 
     @GetMapping("/create")
