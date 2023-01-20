@@ -64,7 +64,7 @@ public class BusinessProviderResource {
     public String create(@ModelAttribute("provider") BusinessProvider provider){
         log.info("Business provider: {}",provider);
         service.create(provider);
-        return "redirect:/business_providers";
+        return "redirect:/business_providers/";
     }
 
     @GetMapping("/edit/{id}")
