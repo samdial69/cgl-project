@@ -1821,4 +1821,73 @@ textarea.w-select {
   border-color: black !important;
 }
 
+.linka:hover {
+  border-style: solid !important;
+  border-width: 5px !important;
+  border-color: #ccffb9 !important;
+}
+
+.home-nav-button1 {
+  background-color: #cbffb9 !important;
+  color: #000 !important;
+  font-weight: 700 !important;
+}
+
+.home-nav-button1:hover {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+.text-block-11 {
+  font-weight: 700 !important;
+}
+
+.div-block-24 {
+  display: -webkit-box !important;
+  display: -webkit-flex !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-pack: center !important;
+  -webkit-justify-content: center !important;
+  -ms-flex-pack: center !important;
+  justify-content: center !important;
+  -webkit-box-align: center !important;
+  -webkit-align-items: center !important;
+  -ms-flex-align: center !important;
+  align-items: center !important;
+}
+
+.div-block-5 {
+  display: -webkit-box !important;
+  display: -webkit-flex !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  padding: 10px 20px !important;
+  -webkit-box-pack: center !important;
+  -webkit-justify-content: center !important;
+  -ms-flex-pack: center !important;
+  justify-content: center !important;
+  -webkit-box-align: center !important;
+  -webkit-align-items: center !important;
+  -ms-flex-align: center !important;
+  align-items: center !important;
+  grid-column-gap: 10px !important;
+  grid-row-gap: 10px !important;
+}
+
+.section2 {
+  position: fixed !important;
+  left: 0% !important;
+  top: auto !important;
+  right: 0% !important;
+  bottom: 0% !important;
+  display: -webkit-box !important;
+  display: -webkit-flex !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-justify-content: space-around !important;
+  -ms-flex-pack: distribute !important;
+  justify-content: space-around !important;
+  background-color: #f3f3f3 !important;
+}
 

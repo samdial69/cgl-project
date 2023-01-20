@@ -34,9 +34,11 @@
 <div class="div-block-3" >
   <form th:action="@{/businesses/edit/{id}(id=${business.id})}" th:object="${business}" method="POST">
 
+    <label class="field-label">Tire de l'affaire :</label>
     <input type="text" name="title" th:field="*{title}"   class="form-control col-4 mb-4" placeholder="Entrez un titre" required="required"/>
-    <!--<input type="number"  name="initialCommission" th:field="*{commissions}" class="form-control col-4 mb-4" placeholder="Entrez une commission initiale"  required="required"/>-->
 
+    <label class="field-label">L'apporteur d'affaire de l'affaire :</label>
+    <br/>
     <input disabled="" th:value="${provider.firstname} + ' ' + ${provider.lastname}"/>
     <br/>
 
@@ -46,6 +48,7 @@
 
 
 <div class="div-block-3" >
+  <h4>Détails de la distribution des commissions :</h4>
   <table class="table table-bordered table-striped" id="CommissionsOfBusiness">
     <thead>
     <tr>

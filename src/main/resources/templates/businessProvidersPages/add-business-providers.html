@@ -34,11 +34,13 @@
 <div class="div-block-3" >
   <form th:action="@{/business_providers/create}" th:object="${provider}" method="POST">
 
+    <label class="field-label">Prénom :</label>
     <input type="text" th:field="*{firstname}" class="form-control col-4 mb-4" placeholder="Entrez un prénom" />
+    <label class="field-label">Nom :</label>
     <input type="text" th:field="*{lastname}" class="form-control col-4 mb-4" placeholder="Entrez un nom" />
     <br/>
     <br/>
-    <label>Veuillez choisir un parrain :</label>
+    <label class="field-label">Veuillez choisir un parrain :</label>
     <select class="form-control col-4 mb-4" th:field="*{sponsor.id}" onChange="onstatechange(this)" th:style="'padding:10px'">
       <option value="">Sélectionnez un parrain</option>
       <option th:each="businessProviderP: ${providers}" th:value="${businessProviderP.id}" th:text="${businessProviderP.firstname}+ ' ' + ${businessProviderP.lastname} + ' ' + ${businessProviderP.id}"></option>

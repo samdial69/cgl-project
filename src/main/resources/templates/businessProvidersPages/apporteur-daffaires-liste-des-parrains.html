@@ -76,11 +76,10 @@
           <span th:if="${businessProvider.sponsor != null}" th:text="${businessProvider.sponsor.firstname} + ' ' + ${businessProvider.sponsor.lastname}"></span>
         </td>
         <td>
-          <a id="buttonSee" th:if="${businessProvider.sponsor != null}" th:href="@{/business_providers/{id}(id=${businessProvider.sponsor.id})}" class="btn btn-info">Voir</a>
+          <a id="buttonSee" th:if="${businessProvider != null}" th:href="@{/business_providers/{id}(id=${businessProvider.id})}" class="btn btn-info">Voir</a>
 
-          <a  th:if="${businessProvider.sponsor != null}" th:href="@{/business_providers/edit/{id}(id=${businessProvider.sponsor.id})}" class="btn btn-info ml-2">Éditer</a>
+          <a  th:if="${businessProvider != null}" th:href="@{/business_providers/edit/{id}(id=${businessProvider.id})}" class="btn btn-info ml-2">Éditer</a>
 
-          <a  th:if="${businessProvider.sponsor != null}" th:href="@{/business_provider/delete/{id}(id=${businessProvider.sponsor.id})}" class="btn btn-danger ml-2">Supprimer</a>
         </td>
       </tr>
       </tbody>
