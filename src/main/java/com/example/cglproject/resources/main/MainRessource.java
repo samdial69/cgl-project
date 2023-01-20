@@ -6,10 +6,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/")
 @Slf4j
 public class MainRessource {
+
 
     @GetMapping("/")
     public String getHome(Model model){
@@ -50,25 +53,7 @@ public class MainRessource {
     @GetMapping("/error404")
     public String getError(Model model){
         log.info("model {}",model.getAttribute("error404"));
-        return "errorPage/error404";
-    }
-
-    @GetMapping("/business/tous-les-affaires")
-    public String getAllBusiness(Model model){
-        log.info("model {}",model.getAttribute("tous les affaires"));
-        return "tous-les-affaires";
-    }
-
-    @GetMapping("/business/apporteur-daffaires")
-    public String getAllBusinessProviders(Model model){
-        log.info("model {}",model.getAttribute("tous les affaires"));
-        return "apporteur-daffaires";
-    }
-
-    @GetMapping("/business/un-AppDaff-directes")
-    public String getOneBusinessProviderD(Model model){
-        log.info("model {}",model.getAttribute("un apporteur d'affaire : les affaires directes"));
-        return "apporteur-daffaires-liste-des-affaires-directes";
+        return "error/error404";
     }
 
 
