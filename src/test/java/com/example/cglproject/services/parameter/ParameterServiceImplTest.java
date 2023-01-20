@@ -35,7 +35,7 @@ class ParameterServiceImplTest {
         this.parameter = Parameter.builder()
                 .id(1L)
                 .levelOfSponsorship(5)
-                .percentageOfCommission(0.2)
+                .percentageOfInitialCommission(0.2)
                 .numberOfBusinessToBeAffiliated(2)
                 .numberOfMonthsAffiliation(2)
                 .build();
@@ -79,7 +79,7 @@ class ParameterServiceImplTest {
         //given
         Parameter parameterToUpdate = Parameter.builder()
                 .levelOfSponsorship(3)
-                .percentageOfCommission(0.2)
+                .percentageOfInitialCommission(0.2)
                 .numberOfBusinessToBeAffiliated(2)
                 .numberOfMonthsAffiliation(2)
                 .build();

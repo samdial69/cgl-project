@@ -16,8 +16,8 @@
     </thead>
     <tbody>
     <tr th:each="commission : ${commissions}">
-      <td th:utext="${commission.businessCommission}"></td>
-      <td th:utext="${commission.businessProviderCommission}"></td>
+<!--       <td th:utext="${commission.businessCommission}"></td> -->
+<!--       <td th:utext="${commission.businessProviderCommission}"></td> -->
       <td>
         <a th:href="@{/commissions/edit/{id}(id=${commission.id})}">Edit</a>
       </td>

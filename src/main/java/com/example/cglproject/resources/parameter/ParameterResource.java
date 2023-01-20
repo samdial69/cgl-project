@@ -56,13 +56,12 @@ public class ParameterResource {
     @PostMapping("/edit/{id}")
     public String update(@PathVariable("id") Long id,@ModelAttribute("parameter") Parameter parameter){
         log.info("Parameter updated by id {}: {}",id,parameter);
-
         Parameter param = service.update(id,parameter);
         if (param == null) {
             return "errors/error404";
         }
         //return "redirect:/parameters/";
-        return "redirect:/";
+        return "redirect:/parametres/edit";
 
     }
 
