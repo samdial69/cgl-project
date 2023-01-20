@@ -43,7 +43,7 @@ public class ParameterResource {
 
     @GetMapping("/edit")
     public String edit(Model model){
-        Optional<Parameter> parameter = Optional.ofNullable(this.service.getApplicationParameters());
+        Optional<Parameter> parameter = this.service.findById(1L);
         if(parameter.isEmpty()) {
             model.addAttribute("parameter", null);
             //return "errors/error404";

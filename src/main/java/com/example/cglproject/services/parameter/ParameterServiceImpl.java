@@ -14,42 +14,45 @@ import java.util.Optional;
 @Slf4j
 public class ParameterServiceImpl implements IParameterService {
 
-    private Parameter currentParameter;
     private final ParameterRepository parameterRepository;
 
     public ParameterServiceImpl(ParameterRepository parameterRepository) {
         this.parameterRepository = parameterRepository;
-        List<Parameter> allParameters = this.parameterRepository.findAll();
-
-        if (allParameters.isEmpty()) {
-            this.currentParameter = new Parameter(0L, 5,5,50,1,3);
-            this.parameterRepository.save(currentParameter);
-        }
+//        List<Parameter> allParameters = this.parameterRepository.findAll();
+//
+//        if (allParameters.isEmpty()) {
+//            this.currentParameter = new Parameter(0L, 5,5,50,1,3);
+//            this.parameterRepository.save(currentParameter);
+//        }
     }
 
     @Override
     public Parameter getApplicationParameters() {
-        if (this.currentParameter != null) {
-            return this.currentParameter;
+        Optional<Parameter> parameter = this.parameterRepository.findById(1L);
+        if (parameter.isEmpty()) {
+            log.error("No parameter found");
+            return null;
         }
-        List<Parameter> allParameters = this.parameterRepository.findAll();
-
-        /*if (!allParameters.isEmpty()) {
-            //return new Parameter(0L, 5,5,50,1,3);
-            //return new Parameter();
-        } */
-
-        if(!allParameters.isEmpty()){
-            Parameter best = allParameters.get(0);
-            for (Parameter param: allParameters) {
-                if (param.getId() > best.getId()) {
-                    best = param;
-                }
-            }
-            this.currentParameter = best;
-            return this.currentParameter;
-        }
-        return null;
+        return parameter.get();
+//        if (this.currentParameter != null) {
+//            return this.currentParameter;
+//        }
+//        List<Parameter> allParameters = this.parameterRepository.findAll();
+//
+//        /*if (!allParameters.isEmpty()) {
+//            //return new Parameter(0L, 5,5,50,1,3);
+//            //return new Parameter();
+//        } */
+//
+//        if(!allParameters.isEmpty()){
+//            Parameter best = allParameters.get(0);
+//            for (Parameter param: allParameters) {
+//                if (param.getId() > best.getId()) {
+//                    best = param;
+//                }
+//            }
+//            this.currentParameter = best;
+//            return this.currentParameter;
     }
 
     @Override
@@ -67,7 +70,6 @@ public class ParameterServiceImpl implements IParameterService {
     @Override
     public Parameter save(Parameter parameter) {
         log.info("Creating a new parameter : {}",parameter);
-        this.currentParameter = parameter;
         return this.parameterRepository.save(parameter);
     }
 
@@ -78,7 +80,6 @@ public class ParameterServiceImpl implements IParameterService {
         if(currentParam.isPresent()){
             log.info("Updating parameter by id : {}",id);
             parameter.setId(currentParam.get().getId());
-            this.currentParameter = parameter;
             return this.parameterRepository.save(parameter);
         }
         return null;
