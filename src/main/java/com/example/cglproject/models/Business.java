@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -19,7 +18,7 @@ public class Business {
     @Column(name = "id", nullable = false)
     private Long id;
     private String title;
-    private Date createdAt = new Date();
+    private LocalDate createdAt = LocalDate.now();
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name= "id_business_provider")
