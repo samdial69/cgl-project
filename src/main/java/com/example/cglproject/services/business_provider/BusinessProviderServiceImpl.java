@@ -22,14 +22,14 @@ import java.util.Optional;
 @Transactional
 @Slf4j
 public class BusinessProviderServiceImpl implements IBusinesProviderService {
-    private BusinessProviderRepository service;
+    private BusinessProviderRepository repository;
     private IBusinessService businessService;
     private ICommissionService commissionService;
 
     private IParameterService parameterService;
 
-    public BusinessProviderServiceImpl(BusinessProviderRepository service, IBusinessService businessService, ICommissionService commissionService, IParameterService parameterService) {
-        this.service = service;
+    public BusinessProviderServiceImpl(BusinessProviderRepository repository, IBusinessService businessService, ICommissionService commissionService, IParameterService parameterService) {
+        this.repository = repository;
         this.businessService = businessService;
         this.commissionService = commissionService;
         this.parameterService = parameterService;
@@ -37,19 +37,19 @@ public class BusinessProviderServiceImpl implements IBusinesProviderService {
     @Override
     public Page<BusinessProvider> getAllBusinessProviders(Pageable pageable) {
         log.info("Getting all business providers with pagination");
-        return this.service.findAll(pageable);
+        return this.repository.findAll(pageable);
     }
 
     @Override
     public List<BusinessProvider> getAllBusinessProviders() {
         log.info("Getting all business providers");
-        return this.service.findAll();
+        return this.repository.findAll();
     }
 
     @Override
     public Optional<BusinessProvider> getById(Long id) {
         log.info("Getting business provider by id: {}", id);
-        return this.service.findById(id);
+        return this.repository.findById(id);
     }
 
     // TODO: supprimer l'apporteur original et ne donner que les parrains
@@ -73,26 +73,26 @@ public class BusinessProviderServiceImpl implements IBusinesProviderService {
         if (businessProvider.getSponsor().getId() == null) {
             businessProvider.setSponsorNull();
         }
-        return this.service.save(businessProvider);
+        return this.repository.save(businessProvider);
     }
 
     @Override
     public BusinessProvider update(Long id, BusinessProvider businessProvider) {
-        Optional<BusinessProvider> currentBusinessProvider = this.service.findById(id);
+        Optional<BusinessProvider> currentBusinessProvider = this.repository.findById(id);
         if (currentBusinessProvider.isPresent()) {
             log.info("Updating business provider: {}", businessProvider);
             businessProvider.setId(currentBusinessProvider.get().getId());
             if (businessProvider.getSponsor().getId() == null) {
                 businessProvider.setSponsorNull();
             }
-            return this.service.save(businessProvider);
+            return this.repository.save(businessProvider);
         }
         return null;
     }
 
     @Override
     public boolean delete(Long id) {
-        Optional<BusinessProvider> currentBusinessProvider = this.service.findById(id);
+        Optional<BusinessProvider> currentBusinessProvider = this.repository.findById(id);
         if (currentBusinessProvider.isPresent()) {
             this.delete(currentBusinessProvider.get());
             return true;
@@ -129,13 +129,13 @@ public class BusinessProviderServiceImpl implements IBusinesProviderService {
             this.update(sponsoredProvider.getId(), sponsoredProvider);
         }
         // now deleting the actual business provider
-        this.service.delete(businessProvider);
+        this.repository.delete(businessProvider);
         return true;
     }
 
     @Override
     public List<Business> findByIdBusinessProvider(Long IdBusinessProvider) {
-        Optional<BusinessProvider> optionalProvider = this.service.findById(IdBusinessProvider);
+        Optional<BusinessProvider> optionalProvider = this.repository.findById(IdBusinessProvider);
         if ( ! optionalProvider.isEmpty()) {
             BusinessProvider provider = optionalProvider.get();
             return provider.getBusinesses();
