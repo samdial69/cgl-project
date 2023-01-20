@@ -119,6 +119,7 @@ public class BusinessServiceImpl implements IBusinessService {
         if(currentBusiness.isPresent()){
             log.info("Updating business by id : {}",id);
             business.setId(currentBusiness.get().getId());
+            business.setProvider(currentBusiness.get().getProvider());
             return this.repository.save(business);
         }
         return null;
